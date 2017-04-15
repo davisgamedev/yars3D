@@ -24,22 +24,35 @@ void AppClass::ProcessKeyboard(void)
 #pragma region Camera Positioning
 	if(bModifier)
 		fSpeed *= 10.0f;
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+
+	// Player Movements
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // Move up
+		player->MoveVertical(-fSpeed);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // Move down
+		player->MoveVertical(fSpeed);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // Move left
+		player->MoveHorizontal(-fSpeed);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Move right
+		player->MoveHorizontal(fSpeed);
+
+	
+	// Camera Movements
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::I))
 		m_pCameraMngr->MoveForward(fSpeed);
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::K))
 		m_pCameraMngr->MoveForward(-fSpeed);
 	
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::J))
 		m_pCameraMngr->MoveSideways(-fSpeed);
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::L))
 		m_pCameraMngr->MoveSideways(fSpeed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
 		m_pCameraMngr->MoveVertical(-fSpeed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
 		m_pCameraMngr->MoveVertical(fSpeed);
 #pragma endregion
 

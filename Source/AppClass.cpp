@@ -18,7 +18,10 @@ void AppClass::InitVariables(void)
 	m_pTorus = new PrimitiveClass();
 
 	//Initializing the primitives
-	m_pSphere->GenerateSphere(0.5f, 5, REWHITE);
+	m_pCube->GenerateCube(0.5, REWHITE);
+
+	// Define player object
+	player = new Player();
 }
 
 void AppClass::Update(void)
@@ -47,8 +50,13 @@ void AppClass::Display(void)
 	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
 	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 
+	// Get the player Matrix
+	matrix4 playerMatrix = player->GetPlayerMatrix();
+
 	//Renders the meshes using the specified position given by the matrix and in the specified color
-	m_pSphere->Render(m4Projection, m4View, m_m4Sphere);
+	// Render the Cube as the player
+	m_pCube->Render(m4Projection, m4View, playerMatrix);
+	
 	
 	//Render the grid based on the camera's mode:
 	m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
