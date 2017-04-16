@@ -1,5 +1,7 @@
 #include "Player.h"
 
+Player* Player::instance = nullptr;
+
 Player::Player()
 {
 	playerMat = IDENTITY_M4; // Matrix for all player transformations

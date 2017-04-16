@@ -16,7 +16,7 @@ void AppClass::InitVariables(void)
 	m_pCube->GenerateCube(0.5, REWHITE);
 
 	// Define player object
-	player = new Player();
+	player = Player::GetInstance();
 }
 
 void AppClass::Update(void)
@@ -57,7 +57,7 @@ void AppClass::Display(void)
 void AppClass::Release(void)
 {
 	SafeDelete(m_pCube);
-	delete player;
+	player->ReleaseInstance();
 	player = nullptr;
 
 	super::Release(); //release the memory of the inherited fields

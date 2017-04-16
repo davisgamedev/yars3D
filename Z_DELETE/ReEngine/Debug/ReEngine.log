@@ -1,8 +1,9 @@
-﻿  AppClass.cpp
+﻿  Player.cpp
+  AppClassControls.cpp
+  AppClass.cpp
   Generating Code...
   Compiling...
   Main.cpp
-  AppClassControls.cpp
   Generating Code...
   ReEngine.vcxproj -> C:\Users\dsmit\Documents\Visual Studio Code\DSA Project\Z_DELETE\ReEngineD.exe
   ReEngine.vcxproj -> C:\Users\dsmit\Documents\Visual Studio Code\DSA Project\Z_DELETE\ReEngineD.pdb (Full PDB)
