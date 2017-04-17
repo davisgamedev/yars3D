@@ -8,6 +8,7 @@ Date: 2015/09
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
 #include "Player.h"
+#include "Camera.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
@@ -18,6 +19,7 @@ class AppClass : public ReEngAppClass
 
 	// Player object
 	Player* player = nullptr;
+	Camera* camera = nullptr;
 
 public:
 	typedef ReEngAppClass super;

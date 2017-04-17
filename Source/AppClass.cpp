@@ -17,6 +17,9 @@ void AppClass::InitVariables(void)
 
 	// Define player object
 	player = Player::GetInstance();
+
+	// adding our camera
+	camera = new Camera();
 }
 
 void AppClass::Update(void)
@@ -36,15 +39,15 @@ void AppClass::Display(void)
 	ClearScreen();
 	
 	//Matrices from the camera
-	matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
-	matrix4 m4View = m_pCameraMngr->GetViewMatrix();
+	//matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
+	//matrix4 m4View = m_pCameraMngr->GetViewMatrix();
 
 	// Get the player Matrix
 	matrix4 playerMatrix = player->GetPlayerMatrix();
 
 	//Renders the meshes using the specified position given by the matrix and in the specified color
 	// Render the Cube as the player
-	m_pCube->Render(m4Projection, m4View, playerMatrix);
+	m_pCube->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
 	
 	
 	//Render the grid based on the camera's mode:
@@ -59,6 +62,9 @@ void AppClass::Release(void)
 	SafeDelete(m_pCube);
 	player->ReleaseInstance();
 	player = nullptr;
+
+	delete camera;
+	camera = nullptr;
 
 	super::Release(); //release the memory of the inherited fields
 }
