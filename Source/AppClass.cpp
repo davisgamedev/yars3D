@@ -19,7 +19,7 @@ void AppClass::InitVariables(void)
 	player = Player::GetInstance();
 
 	// adding our camera
-	camera = new Camera();
+	camera = Camera::GetInstance();
 }
 
 void AppClass::Update(void)
@@ -63,7 +63,7 @@ void AppClass::Release(void)
 	player->ReleaseInstance();
 	player = nullptr;
 
-	delete camera;
+	camera->ReleaseInstance();
 	camera = nullptr;
 
 	super::Release(); //release the memory of the inherited fields

@@ -6,7 +6,7 @@
 
 class Camera
 {
-public:
+private:
 	Camera();
 	~Camera();
 
@@ -15,6 +15,24 @@ public:
 
 	matrix4 viewMatrix;
 	matrix4 projectionMatrix;
+
+	static Camera* instance;
+
+public:
+	static Camera* GetInstance() {
+		if (instance == nullptr) {
+			instance = new Camera();
+		}
+		return instance;
+	}
+
+	static void ReleaseInstance() {
+		if (instance != nullptr)
+		{
+			delete instance;
+			instance = nullptr;
+		}
+	}
 
 	matrix4 GetView(void);
 	matrix4 GetProjection(bool ortho);

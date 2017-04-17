@@ -1,10 +1,9 @@
-﻿  Player.cpp
-  AppClassControls.cpp
+﻿  Camera.cpp
   AppClass.cpp
   Generating Code...
-  Compiling...
+  Skipping... (no relevant changes detected)
   Main.cpp
-  Generating Code...
+  AppClassControls.cpp
   ReEngine.vcxproj -> C:\Users\dsmit\Documents\Visual Studio Code\DSA Project\Z_DELETE\ReEngineD.exe
   ReEngine.vcxproj -> C:\Users\dsmit\Documents\Visual Studio Code\DSA Project\Z_DELETE\ReEngineD.pdb (Full PDB)
   A subdirectory or file C:\Users\dsmit\Documents\Visual Studio Code\DSA Project\_Binary\ already exists.

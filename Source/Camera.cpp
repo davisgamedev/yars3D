@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "AppClass.h"
 
+Camera* Camera::instance = nullptr;
 
 Camera::Camera()
 {
@@ -25,7 +26,7 @@ matrix4 Camera::GetProjection(bool ortho)
 	}
 	else
 	{
-		projectionMatrix = glm::perspective(45.0f, 1080.0f / 768.0f, .01f, 1000.0f);
+		projectionMatrix = glm::perspective(45.0f, 4.0f/2.5f, .01f, 1000.0f);
 	}
 
 	return projectionMatrix;
