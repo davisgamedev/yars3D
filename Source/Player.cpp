@@ -26,6 +26,7 @@ void Player::MoveVertical(float fIncrement) {
 	
 	// increment position in Z direction
 	vector3 zIncrement = vector3(0.0f, 0.0f, fIncrement);
+	playerPos += zIncrement;
 
 	// apply tranlation to player matrix
 	playerMat = glm::translate(playerMat, zIncrement);
@@ -39,9 +40,13 @@ void Player::MoveHorizontal(float fIncrement) {
 
 	// increment position in X direction
 	vector3 xIncrement = vector3(fIncrement, 0.0f, 0.0f);
-
+	playerPos += xIncrement;
 	// apply tranlation to player matrix
 	playerMat = glm::translate(playerMat, xIncrement);
+}
+
+vector3 Player::GetPlayerPosition() {
+	return playerPos;
 }
 
 void Player::Shoot() {} // Shoot bullet

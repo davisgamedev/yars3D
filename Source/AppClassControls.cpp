@@ -24,17 +24,6 @@ void AppClass::ProcessKeyboard(void)
 #pragma region Camera Positioning
 	if(bModifier)
 		fSpeed *= 10.0f;
-
-	// Player Movements
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // Move up
-		player->MoveVertical(-fSpeed);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // Move down
-		player->MoveVertical(fSpeed);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // Move left
-		player->MoveHorizontal(-fSpeed);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Move right
-		player->MoveHorizontal(fSpeed);
-
 	
 	// Camera Movements
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::I))
@@ -54,6 +43,17 @@ void AppClass::ProcessKeyboard(void)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
 		m_pCameraMngr->MoveVertical(fSpeed);
+
+	// Player movement
+	// else statements so player can only move in one direction at a time (no diagonal)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // Move up
+		player->MoveVertical(-fSpeed * 10);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // Move down
+		player->MoveVertical(fSpeed * 10);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // Move left
+		player->MoveHorizontal(-fSpeed * 10);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Move right
+		player->MoveHorizontal(fSpeed * 10);
 #pragma endregion
 
 #pragma region Other Actions

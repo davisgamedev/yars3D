@@ -17,6 +17,7 @@ void AppClass::InitVariables(void)
 
 	// Define player object
 	player = Player::GetInstance();
+	playerPos = vector3(0.0f, 0.0f, 0.0f);
 
 	// adding our camera
 	camera = Camera::GetInstance();
@@ -26,11 +27,28 @@ void AppClass::Update(void)
 {
 	//Indicate the FPS
 	int nFPS = m_pSystem->GetFPS();
+
+	playerPos = player->GetPlayerPosition();
+
 	//Print info on the screen
 	m_pMeshMngr->PrintLine("");
-	m_pMeshMngr->PrintLine(m_pSystem->GetAppName(), REYELLOW);
-	m_pMeshMngr->Print("FPS:");
-	m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+	m_pMeshMngr->PrintLine("Yars Revenge 3D", REYELLOW);
+	//m_pMeshMngr->Print("FPS:");
+	//m_pMeshMngr->Print(std::to_string(nFPS), RERED);
+
+	// Player position, using this to set up player bounderies
+	m_pMeshMngr->Print("PlayerPosition: (");
+	m_pMeshMngr->Print(std::to_string(playerPos.x), RERED);
+	m_pMeshMngr->Print(", ");
+	m_pMeshMngr->Print(std::to_string(playerPos.y), RERED);
+	m_pMeshMngr->Print(", ");
+	m_pMeshMngr->Print(std::to_string(playerPos.z), RERED);
+	m_pMeshMngr->PrintLine(")");
+
+	// UI elements
+	m_pMeshMngr->PrintLine("Score: ", REYELLOW);
+	m_pMeshMngr->PrintLine("Lives: ", REYELLOW);
+	
 }
 
 void AppClass::Display(void)

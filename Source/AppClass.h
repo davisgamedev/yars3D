@@ -19,7 +19,11 @@ class AppClass : public ReEngAppClass
 
 	// Player object
 	Player* player = nullptr;
+	// Camera object
 	Camera* camera = nullptr;
+
+	vector3 playerPos;
+	
 
 public:
 	typedef ReEngAppClass super;
