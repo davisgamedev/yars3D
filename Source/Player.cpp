@@ -6,6 +6,9 @@ Player::Player()
 {
 	playerMat = IDENTITY_M4; // Matrix for all player transformations
 	playerPos = vector3(0.0f, 0.0f, 0.0f); // vec3 for player position, MAY NOT NEED THIS
+
+	mainBullet = new Bullet(playerPos,playerDir, 0); //Create initial bullet
+	killBullet = new Bullet(playerPos, playerDir, 1); //Create initial bullet
 }
 
 
@@ -49,5 +52,25 @@ vector3 Player::GetPlayerPosition() {
 	return playerPos;
 }
 
-void Player::Shoot() {} // Shoot bullet
+int Player::GetPlayerDirection() {
+	return playerDir;
+}
+
+void Player::SetPlayerDirection(int dir) {
+	playerDir = dir;
+}
+
+void Player::Shoot() // Shoot bullet
+{
+	if (killBullet->GetActiveBullet() == true && killBullet->GetFired() == false) // Kill Bullet
+	{
+		killBullet->SetFired(true);
+	}
+	else //Main Bullet 
+	{
+		mainBullet = new Bullet(playerPos, playerDir, 0);
+		mainBullet->SetActiveBullet(true);
+		mainBullet->SetFired(true);
+	}
+}
 

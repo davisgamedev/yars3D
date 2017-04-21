@@ -8,6 +8,7 @@ Date: 2015/09
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
 #include "Player.h"
+#include "Bullet.h"
 #include "Camera.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
@@ -15,6 +16,8 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 class AppClass : public ReEngAppClass
 {
 	PrimitiveClass* m_pCube = nullptr;
+	PrimitiveClass* m_pBullet = nullptr;
+	PrimitiveClass* m_pKillBullet = nullptr;
 	matrix4 m_m4Cube;
 
 	// Player object

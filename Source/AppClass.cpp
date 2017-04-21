@@ -11,9 +11,13 @@ void AppClass::InitVariables(void)
 	m_pCameraMngr->SetPositionTargetAndView(vector3(0.0f, 0.0f, 15.0f), vector3(0.0f, 0.0f, 0.0f), REAXISY);
 
 	m_pCube = new PrimitiveClass();
+	m_pBullet = new PrimitiveClass();
+	m_pKillBullet = new PrimitiveClass();
 
 	//Initializing the primitives
 	m_pCube->GenerateCube(0.5, REWHITE);
+	m_pBullet->GenerateCube(0.5, REBLUE);
+	m_pKillBullet->GenerateCube(0.5, REGREEN);
 
 	// Define player object
 	player = Player::GetInstance();
@@ -49,6 +53,15 @@ void AppClass::Update(void)
 	m_pMeshMngr->PrintLine("Score: ", REYELLOW);
 	m_pMeshMngr->PrintLine("Lives: ", REYELLOW);
 	
+	//Update bullet positions
+	if (player->mainBullet->GetFired() == true)
+	{
+		player->mainBullet->Fire();
+	}
+	if (player->killBullet->GetFired() == true)
+	{
+		player->killBullet->Fire();
+	}
 }
 
 void AppClass::Display(void)
@@ -66,6 +79,17 @@ void AppClass::Display(void)
 	//Renders the meshes using the specified position given by the matrix and in the specified color
 	// Render the Cube as the player
 	m_pCube->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
+
+	//Display Bullets
+	if (player->mainBullet->GetActiveBullet() == true)
+	{
+		m_pBullet->Render(camera->GetProjection(false), camera->GetView(), player->mainBullet->GetBulletMatrix());
+	}
+
+	if (player->killBullet->GetActiveBullet() == true)
+	{
+		m_pKillBullet->Render(camera->GetProjection(false), camera->GetView(), player->killBullet->GetBulletMatrix());
+	}
 	
 	
 	//Render the grid based on the camera's mode:
@@ -78,6 +102,8 @@ void AppClass::Display(void)
 void AppClass::Release(void)
 {
 	SafeDelete(m_pCube);
+	SafeDelete(m_pBullet);
+	SafeDelete(m_pKillBullet);
 	player->ReleaseInstance();
 	player = nullptr;
 

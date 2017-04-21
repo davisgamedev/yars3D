@@ -47,13 +47,49 @@ void AppClass::ProcessKeyboard(void)
 	// Player movement
 	// else statements so player can only move in one direction at a time (no diagonal)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // Move up
+	{
+		player->SetPlayerDirection(0); //Set direction
+		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
+		{
+			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 10)));
+		}
+
 		player->MoveVertical(-fSpeed * 10);
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // Move down
+	{
+		player->SetPlayerDirection(2); //Set direction
+		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
+		{
+			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 10)));
+		}
+
 		player->MoveVertical(fSpeed * 10);
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // Move left
+	{
+		player->SetPlayerDirection(3); //Set direction
 		player->MoveHorizontal(-fSpeed * 10);
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Move right
+	{
+		player->SetPlayerDirection(1); //Set direction
 		player->MoveHorizontal(fSpeed * 10);
+	}
+
+	// Player Attack
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && player->mainBullet->GetActiveBullet() == false) // Shoot Bullet
+	{
+		player->Shoot();
+	}
+
+	//TEST KILL BULLET
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) // Activate Kill Bullet
+	{
+		player->killBullet = new Bullet(playerPos, 0, 1);
+		player->killBullet->SetActiveBullet(true);
+	}
 #pragma endregion
 
 #pragma region Other Actions
