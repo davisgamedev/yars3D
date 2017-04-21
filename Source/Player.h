@@ -46,7 +46,7 @@ public:
 	void MoveVertical(float fIncrement); // Move the player up and down
 	void MoveHorizontal(float fIncrement); // Move the left and right
 	void Shoot(); // Shoot bullet
-	vector3 GetPlayerPosition(); // Get the player's position, use for debug
+	vector3 GetPlayerPosition(); // Get the player's position
 	int GetPlayerDirection(); // Get the player's direction
 	void SetPlayerDirection(int dir); // Sets the player's direction
 	

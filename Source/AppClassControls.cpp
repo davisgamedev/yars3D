@@ -83,11 +83,10 @@ void AppClass::ProcessKeyboard(void)
 		player->Shoot();
 	}
 
-	//TEST KILL BULLET
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) // Activate Kill Bullet
+	//TEST KILL BULLET USING T -- Will be triggered by touching enemy core
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::T)) && player->killBullet->GetActiveBullet() == false) // Activate Kill Bullet
 	{
-		player->killBullet = new Bullet(playerPos, 0, 1);
+		player->killBullet = new Bullet(playerPos, 1, 1);
 		player->killBullet->SetActiveBullet(true);
 	}
 #pragma endregion

@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include <stdio.h>
 
 
 // Constructor with 3 arguments (the user of the bullets position and direction and the type of bullet being fired)
@@ -23,6 +24,7 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 		break;
 	case 2:
 		// Assign bullet details
+		bulletM4 = glm::translate(bulletPos);
 		break;
 	case 3:
 		// Assign bullet details
@@ -82,7 +84,7 @@ void Bullet::BulletDamage()
 	}
 }
 
-// Bullet activates and moves depending on bullet type
+// Player Bullet moves depending on bullet type
 void Bullet::Fire()
 {
 
@@ -133,11 +135,68 @@ void Bullet::Fire()
 			}
 		}
 		break;
+	default:
+		break;
+	}
+}
+
+
+// Enemy Bullet moves depending on bullet type
+void Bullet::FireEnemy(vector3 playerPos)
+{
+
+	switch (bulletType) {
 	case 2:
-		// Movement of bullet type 
+		// Movement of bullet type  2
+		
+		// Tracking X
+		if (playerPos.x < bulletPos.x + 0.05f && playerPos.x > bulletPos.x - 0.05f)
+		{
+			// STOP IN X
+		}
+		else
+		{
+			if (playerPos.x < bulletPos.x)
+			{
+				movement = vector3(-0.02f, 0.0f, 0.0f);
+				bulletPos += movement;
+			}
+			else if (playerPos.x > bulletPos.x)
+			{
+				movement = vector3(0.02f, 0.0f, 0.0f);
+				bulletPos += movement;
+			}
+			bulletM4 = glm::translate(bulletM4, movement);
+		}
+
+		// Tracking Z
+		if (playerPos.z < bulletPos.z + 0.05f && playerPos.z > bulletPos.z - 0.05f)
+		{
+			// STOP IN Z
+		}
+		else
+		{
+			if (playerPos.z < bulletPos.z)
+			{
+				movement = vector3(0.0f, 0.0f, -0.02f);
+				bulletPos += movement;
+			}
+			else if (playerPos.z > bulletPos.z)
+			{
+				movement = vector3(0.0f, 0.0f, 0.02f);
+				bulletPos += movement;
+			}
+			bulletM4 = glm::translate(bulletM4, movement);
+		}
+		
+		
+
+
+		std::cout << "TEST: " << bulletPos.x;
+
 		break;
 	case 3:
-		// Movement of bullet type 
+		// Movement of bullet type 3
 		break;
 	default:
 		break;

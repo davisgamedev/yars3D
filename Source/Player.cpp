@@ -62,15 +62,15 @@ void Player::SetPlayerDirection(int dir) {
 
 void Player::Shoot() // Shoot bullet
 {
-	if (killBullet->GetActiveBullet() == true && killBullet->GetFired() == false) // Kill Bullet
-	{
-		killBullet->SetFired(true);
-	}
-	else //Main Bullet 
+	if (killBullet->GetActiveBullet() == false || killBullet->GetFired() == true) // Kill Bullet
 	{
 		mainBullet = new Bullet(playerPos, playerDir, 0);
 		mainBullet->SetActiveBullet(true);
 		mainBullet->SetFired(true);
+	}
+	else if (killBullet->GetActiveBullet() == true && killBullet->GetFired() == false)//Main Bullet 
+	{
+		killBullet->SetFired(true);
 	}
 }
 

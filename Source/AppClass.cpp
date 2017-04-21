@@ -13,11 +13,13 @@ void AppClass::InitVariables(void)
 	m_pCube = new PrimitiveClass();
 	m_pBullet = new PrimitiveClass();
 	m_pKillBullet = new PrimitiveClass();
+	m_pTrackingBullet = new PrimitiveClass();
 
 	//Initializing the primitives
 	m_pCube->GenerateCube(0.5, REWHITE);
 	m_pBullet->GenerateCube(0.5, REBLUE);
 	m_pKillBullet->GenerateCube(0.5, REGREEN);
+	m_pTrackingBullet->GenerateCube(0.5, RERED);
 
 	// Define player object
 	player = Player::GetInstance();
@@ -25,6 +27,10 @@ void AppClass::InitVariables(void)
 
 	// adding our camera
 	camera = Camera::GetInstance();
+
+	// TEMP enemy bullet
+	trackingBullet = new Bullet(vector3(6.0f, 0.0f, 2.5f), 3, 2);
+	trackingBullet->SetActiveBullet(true);
 }
 
 void AppClass::Update(void)
@@ -62,6 +68,9 @@ void AppClass::Update(void)
 	{
 		player->killBullet->Fire();
 	}
+
+	//Enemy Bullet Update
+	trackingBullet->FireEnemy(player->GetPlayerPosition());
 }
 
 void AppClass::Display(void)
@@ -90,6 +99,11 @@ void AppClass::Display(void)
 	{
 		m_pKillBullet->Render(camera->GetProjection(false), camera->GetView(), player->killBullet->GetBulletMatrix());
 	}
+
+	if (trackingBullet->GetActiveBullet() == true)
+	{
+		m_pTrackingBullet->Render(camera->GetProjection(false), camera->GetView(), trackingBullet->GetBulletMatrix());
+	}
 	
 	
 	//Render the grid based on the camera's mode:
@@ -104,6 +118,8 @@ void AppClass::Release(void)
 	SafeDelete(m_pCube);
 	SafeDelete(m_pBullet);
 	SafeDelete(m_pKillBullet);
+	SafeDelete(m_pTrackingBullet);
+	SafeDelete(trackingBullet); //TEMP
 	player->ReleaseInstance();
 	player = nullptr;
 

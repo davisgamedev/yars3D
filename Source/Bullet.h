@@ -25,6 +25,7 @@ public:
 	void Disrupted(); // Alter bullet behavior depending on bullet type
 	void BulletDamage(); // Do collision damage based on bullet type
 	void Fire(); // Bullet activates and moves depending on bullet type
+	void FireEnemy(vector3 playerPos);
 	void ChangePosition(vector3 change); // Update method for position
 	bool GetActiveBullet(); // Get method for active state
 	void SetActiveBullet(bool isActive); // Set method for active state

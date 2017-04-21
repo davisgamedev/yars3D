@@ -18,6 +18,7 @@ class AppClass : public ReEngAppClass
 	PrimitiveClass* m_pCube = nullptr;
 	PrimitiveClass* m_pBullet = nullptr;
 	PrimitiveClass* m_pKillBullet = nullptr;
+	PrimitiveClass* m_pTrackingBullet = nullptr;
 	matrix4 m_m4Cube;
 
 	// Player object
@@ -26,7 +27,10 @@ class AppClass : public ReEngAppClass
 	Camera* camera = nullptr;
 
 	vector3 playerPos;
-	
+
+
+	// TEMP ENEMY BULLET
+	Bullet* trackingBullet = nullptr;
 
 public:
 	typedef ReEngAppClass super;
