@@ -54,7 +54,7 @@ void AppClass::ProcessKeyboard(void)
 			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 10)));
 		}
 
-		player->MoveVertical(-fSpeed * 10);
+		player->MoveVertical(-fSpeed * 7); // slower than horizontal speed
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // Move down
 	{
@@ -64,7 +64,7 @@ void AppClass::ProcessKeyboard(void)
 			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 10)));
 		}
 
-		player->MoveVertical(fSpeed * 10);
+		player->MoveVertical(fSpeed * 7);  // slower than horizontal speed
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // Move left
 	{

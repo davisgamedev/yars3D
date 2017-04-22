@@ -9,6 +9,9 @@ Player::Player()
 
 	mainBullet = new Bullet(playerPos,playerDir, 0); //Create initial bullet
 	killBullet = new Bullet(playerPos, playerDir, 1); //Create initial bullet
+
+	verticalBoundary = 4.0f; // set max/min vertical boundary (z axis)
+	horizontalBoundary = 6.5f; // set max/min horizontal boudnary (x axis)
 }
 
 
@@ -33,6 +36,8 @@ void Player::MoveVertical(float fIncrement) {
 
 	// apply tranlation to player matrix
 	playerMat = glm::translate(playerMat, zIncrement);
+
+	WrapPlayer();
 }
 
 
@@ -46,17 +51,29 @@ void Player::MoveHorizontal(float fIncrement) {
 	playerPos += xIncrement;
 	// apply tranlation to player matrix
 	playerMat = glm::translate(playerMat, xIncrement);
+
+	// Check for horizontal boundary, prevent player from moving outside of it
+	if (playerPos.x > horizontalBoundary) { // Right Boundary
+		playerPos.x = horizontalBoundary;
+		playerMat = glm::translate(IDENTITY_M4, playerPos);
+		
+	}
+	else if (playerPos.x < -horizontalBoundary) { // Left Boundary
+		playerPos.x = -horizontalBoundary;
+		playerMat = glm::translate(IDENTITY_M4, playerPos);
+	}
+	
 }
 
-vector3 Player::GetPlayerPosition() {
+vector3 Player::GetPlayerPosition() { // return player's position
 	return playerPos;
 }
 
-int Player::GetPlayerDirection() {
+int Player::GetPlayerDirection() { // return player's direction
 	return playerDir;
 }
 
-void Player::SetPlayerDirection(int dir) {
+void Player::SetPlayerDirection(int dir) { // set player's direction
 	playerDir = dir;
 }
 
@@ -71,6 +88,17 @@ void Player::Shoot() // Shoot bullet
 	else if (killBullet->GetActiveBullet() == true && killBullet->GetFired() == false)//Main Bullet 
 	{
 		killBullet->SetFired(true);
+	}
+}
+
+void Player::WrapPlayer() { // Wraps player on vertical axis
+	if (playerPos.z > verticalBoundary) {
+		playerPos.z = -verticalBoundary;
+		playerMat = glm::translate(IDENTITY_M4, playerPos);
+	}
+	else if (playerPos.z < -verticalBoundary) {
+		playerPos.z = verticalBoundary;
+		playerMat = glm::translate(IDENTITY_M4, playerPos);
 	}
 }
 
