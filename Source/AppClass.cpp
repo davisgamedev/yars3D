@@ -30,7 +30,7 @@ void AppClass::InitVariables(void)
 	playerPos = vector3(0.0f, 0.0f, 0.0f);
 
 	// define enemy object
-	enemy = new Enemy();
+	enemy = Enemy::GetInstance();
 
 	// adding our camera
 	camera = Camera::GetInstance();
@@ -135,6 +135,9 @@ void AppClass::Release(void)
 	SafeDelete(trackingBullet); //TEMP
 	player->ReleaseInstance();
 	player = nullptr;
+
+	enemy->ReleaseInstance();
+	enemy = nullptr;
 
 	camera->ReleaseInstance();
 	camera = nullptr;

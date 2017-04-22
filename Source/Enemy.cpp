@@ -1,5 +1,6 @@
 #include "Enemy.h"
 
+Enemy* Enemy::instance = nullptr;
 
 // create a new enemy instance
 Enemy::Enemy()
