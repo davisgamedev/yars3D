@@ -10,13 +10,17 @@ void AppClass::InitVariables(void)
 	//Sets the camera
 	m_pCameraMngr->SetPositionTargetAndView(vector3(0.0f, 0.0f, 15.0f), vector3(0.0f, 0.0f, 0.0f), REAXISY);
 
-	m_pCube = new PrimitiveClass();
+	m_pPlayer = new PrimitiveClass();
+	m_pEnemy = new PrimitiveClass();
+
 	m_pBullet = new PrimitiveClass();
 	m_pKillBullet = new PrimitiveClass();
 	m_pTrackingBullet = new PrimitiveClass();
 
 	//Initializing the primitives
-	m_pCube->GenerateCube(0.5, REWHITE);
+	m_pPlayer->GenerateCube(0.5, REWHITE);
+	m_pEnemy->GenerateCube(0.5, REYELLOW);
+
 	m_pBullet->GenerateCube(0.5, REBLUE);
 	m_pKillBullet->GenerateCube(0.5, REGREEN);
 	m_pTrackingBullet->GenerateCube(0.5, RERED);
@@ -24,6 +28,9 @@ void AppClass::InitVariables(void)
 	// Define player object
 	player = Player::GetInstance();
 	playerPos = vector3(0.0f, 0.0f, 0.0f);
+
+	// define enemy object
+	enemy = new Enemy();
 
 	// adding our camera
 	camera = Camera::GetInstance();
@@ -54,6 +61,9 @@ void AppClass::Update(void)
 	m_pMeshMngr->Print(", ");
 	m_pMeshMngr->Print(std::to_string(playerPos.z), RERED);
 	m_pMeshMngr->PrintLine(")");
+
+	// update the enemy position
+	enemy->Move();
 
 	// UI elements
 	m_pMeshMngr->PrintLine("Score: ", REYELLOW);
@@ -87,7 +97,10 @@ void AppClass::Display(void)
 
 	//Renders the meshes using the specified position given by the matrix and in the specified color
 	// Render the Cube as the player
-	m_pCube->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
+	m_pPlayer->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
+
+	// render another cube to represent the enemy
+	m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
 
 	//Display Bullets
 	if (player->mainBullet->GetActiveBullet() == true)
@@ -115,7 +128,7 @@ void AppClass::Display(void)
 
 void AppClass::Release(void)
 {
-	SafeDelete(m_pCube);
+	SafeDelete(m_pPlayer);
 	SafeDelete(m_pBullet);
 	SafeDelete(m_pKillBullet);
 	SafeDelete(m_pTrackingBullet);

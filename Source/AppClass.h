@@ -10,12 +10,14 @@ Date: 2015/09
 #include "Player.h"
 #include "Bullet.h"
 #include "Camera.h"
+#include "Enemy.h"
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
-	PrimitiveClass* m_pCube = nullptr;
+	PrimitiveClass* m_pPlayer = nullptr;
+	PrimitiveClass* m_pEnemy = nullptr;
 	PrimitiveClass* m_pBullet = nullptr;
 	PrimitiveClass* m_pKillBullet = nullptr;
 	PrimitiveClass* m_pTrackingBullet = nullptr;
@@ -25,6 +27,8 @@ class AppClass : public ReEngAppClass
 	Player* player = nullptr;
 	// Camera object
 	Camera* camera = nullptr;
+	// Enemy object
+	Enemy* enemy = nullptr;
 
 	vector3 playerPos;
 
