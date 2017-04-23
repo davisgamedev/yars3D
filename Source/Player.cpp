@@ -81,6 +81,22 @@ int Player::GetPlayerDirection() { // return player's direction
 
 void Player::SetPlayerDirection(int dir) { // set player's direction
 	playerDir = dir;
+	// Don't want to change rotation every frame, just when it's direction changes
+	/*
+	if (playerDir = 0) { // UP
+		playerMat = glm::rotate(playerMat, -1.0f, vector3(0.0f, 1.0f, 0.0f));
+		//glm::rotate(player)
+	}
+	else if (playerDir = 1) { // RIGHT
+		playerMat = glm::rotate(playerMat, 1.0f, vector3(0.0f, 1.0f, 0.0f));
+	}
+	else if (playerDir = 2) { // DOWN
+		playerMat = glm::rotate(playerMat, 1.0f, vector3(0.0f, 1.0f, 0.0f));
+	}
+	else if (playerDir = 3) { // LEFT
+		playerMat = glm::rotate(playerMat, -1.0f, vector3(0.0f, 1.0f, 0.0f));
+	}
+	*/
 }
 
 void Player::Shoot() // Shoot bullet
