@@ -19,6 +19,69 @@ private:
 	float verticalBoundary;
 	float horizontalBoundary;
 
+	//voxels
+	//handle array allocation in Generate
+	//handle deletion in class deconstructor
+	PrimitiveClass* voxelList = nullptr;
+	const int NUM_VOXELS = 26;
+	const float SIZE_VOXELS = 0.125f;
+	matrix4 voxelMatrixList1[26] = {
+		glm::translate(IDENTITY_M4, vector3(1.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(2.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(3.5f * SIZE_VOXELS, 0.0f, 1.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(0.5f * SIZE_VOXELS, 0.0f, 1.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 1.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 2.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 3.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(0.5f * SIZE_VOXELS, 0.0f, 3.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(1.5f * SIZE_VOXELS, 0.0f, 3.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-1.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-2.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-3.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-3.5f * SIZE_VOXELS, 0.0f, 1.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(1.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(2.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(3.5f * SIZE_VOXELS, 0.0f, 1.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(0.5f * SIZE_VOXELS, 0.0f, 1.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 1.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 2.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 3.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(0.5f * SIZE_VOXELS, 0.0f, 3.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(1.5f * SIZE_VOXELS, 0.0f, 3.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-1.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-2.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-3.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-3.5f * SIZE_VOXELS, 0.0f, 1.5f * -SIZE_VOXELS))
+	};
+	matrix4 voxelMatrixList2[26] = {
+		glm::translate(IDENTITY_M4, vector3(1.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(2.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(3.5f * SIZE_VOXELS, 0.0f, 1.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(0.5f * SIZE_VOXELS, 0.0f, 1.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 1.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 2.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-1.5f * SIZE_VOXELS, 0.0f, 2.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-2.5f * SIZE_VOXELS, 0.0f, 2.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-2.5f * SIZE_VOXELS, 0.0f, 3.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-1.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-2.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-3.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-3.5f * SIZE_VOXELS, 0.0f, 1.5f * SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(1.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(2.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(3.5f * SIZE_VOXELS, 0.0f, 1.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(0.5f * SIZE_VOXELS, 0.0f, 1.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 1.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-0.5f * SIZE_VOXELS, 0.0f, 2.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-1.5f * SIZE_VOXELS, 0.0f, 2.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-2.5f * SIZE_VOXELS, 0.0f, 2.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-2.5f * SIZE_VOXELS, 0.0f, 3.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-1.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-2.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-3.5f * SIZE_VOXELS, 0.0f, 0.5f * -SIZE_VOXELS)),
+		glm::translate(IDENTITY_M4, vector3(-3.5f * SIZE_VOXELS, 0.0f, 1.5f * -SIZE_VOXELS))
+	};
+
 	// Constructor, Destructor
 	Player();
 	~Player();
@@ -54,6 +117,9 @@ public:
 	int GetPlayerDirection(); // Get the player's direction
 	void SetPlayerDirection(int dir); // Sets the player's direction
 	void WrapPlayer();
+	void GenerateModel(vector3 color);
+	void Render(matrix4 projection, matrix4 view, matrix4 world, bool movingFrame);
+	bool Moving = false;
 };
 
 

@@ -10,7 +10,7 @@ void AppClass::InitVariables(void)
 	//Sets the camera
 	m_pCameraMngr->SetPositionTargetAndView(vector3(0.0f, 0.0f, 15.0f), vector3(0.0f, 0.0f, 0.0f), REAXISY);
 
-	m_pPlayer = new PrimitiveClass();
+	//m_pPlayer = new PrimitiveClass();
 	m_pEnemy = new PrimitiveClass();
 
 	m_pBullet = new PrimitiveClass();
@@ -18,7 +18,7 @@ void AppClass::InitVariables(void)
 	m_pTrackingBullet = new PrimitiveClass();
 
 	//Initializing the primitives
-	m_pPlayer->GenerateCube(0.5, REWHITE);
+	//m_pPlayer->GenerateCube(0.5, REWHITE);
 	m_pEnemy->GenerateCube(0.5, REYELLOW);
 
 	m_pBullet->GenerateCube(0.5, REBLUE);
@@ -27,6 +27,7 @@ void AppClass::InitVariables(void)
 
 	// Define player object
 	player = Player::GetInstance();
+	player->GenerateModel(REWHITE);
 	playerPos = vector3(0.0f, 0.0f, 0.0f);
 
 	// define enemy object
@@ -38,6 +39,8 @@ void AppClass::InitVariables(void)
 	// TEMP enemy bullet
 	trackingBullet = new Bullet(vector3(6.0f, 0.0f, 2.5f), 3, 2);
 	trackingBullet->SetActiveBullet(true);
+
+	frameCount = 0;
 }
 
 void AppClass::Update(void)
@@ -61,6 +64,8 @@ void AppClass::Update(void)
 	m_pMeshMngr->Print(", ");
 	m_pMeshMngr->Print(std::to_string(playerPos.z), RERED);
 	m_pMeshMngr->PrintLine(")");
+	m_pMeshMngr->Print("Current Frame: ", REYELLOW);
+	m_pMeshMngr->PrintLine(std::to_string(frameCount), RERED);
 
 	// update the enemy position
 	enemy->Move();
@@ -87,6 +92,9 @@ void AppClass::Display(void)
 {
 	//clear the screen
 	ClearScreen();
+
+	frameCount++;
+	//frameCount %= sizeof(int);
 	
 	//Matrices from the camera
 	//matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
@@ -97,7 +105,8 @@ void AppClass::Display(void)
 
 	//Renders the meshes using the specified position given by the matrix and in the specified color
 	// Render the Cube as the player
-	m_pPlayer->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
+	//m_pPlayer->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
+	player->Render(camera->GetProjection(false), camera->GetView(), playerMatrix, (frameCount/4)%2==0);
 
 	// render another cube to represent the enemy
 	m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
@@ -128,7 +137,7 @@ void AppClass::Display(void)
 
 void AppClass::Release(void)
 {
-	SafeDelete(m_pPlayer);
+	//SafeDelete(m_pPlayer);
 	SafeDelete(m_pEnemy);
 	SafeDelete(m_pBullet);
 	SafeDelete(m_pKillBullet);

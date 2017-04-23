@@ -192,7 +192,7 @@ void Bullet::FireEnemy(vector3 playerPos)
 		
 
 
-		std::cout << "TEST: " << bulletPos.x;
+		//std::cout << "TEST: " << bulletPos.x;
 
 		break;
 	case 3:

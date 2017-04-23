@@ -17,6 +17,10 @@ Player::Player()
 
 Player::~Player()
 {
+	if (voxelList != nullptr) {
+		delete[] voxelList;
+		voxelList = nullptr;
+	}
 }
 
 // Get the Player's transformation matrix
@@ -37,6 +41,7 @@ void Player::MoveVertical(float fIncrement) {
 	// apply tranlation to player matrix
 	playerMat = glm::translate(playerMat, zIncrement);
 
+	Moving = true;
 	WrapPlayer();
 }
 
@@ -62,7 +67,8 @@ void Player::MoveHorizontal(float fIncrement) {
 		playerPos.x = -horizontalBoundary;
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
 	}
-	
+
+	Moving = true;
 }
 
 vector3 Player::GetPlayerPosition() { // return player's position
@@ -102,3 +108,25 @@ void Player::WrapPlayer() { // Wraps player on vertical axis
 	}
 }
 
+void Player::GenerateModel(vector3 color) {
+	if (voxelList == nullptr) {
+		voxelList = new PrimitiveClass[NUM_VOXELS];
+		for (int i = 0; i < NUM_VOXELS; i++) {
+			voxelList[i] = *(new PrimitiveClass());
+			voxelList[i].GenerateCube(SIZE_VOXELS, color);
+		}
+	}
+}
+
+void Player::Render(matrix4 projection, matrix4 view, matrix4 world, bool movingFrame) {
+	if (voxelList != nullptr) {
+		for (int i = 0; i < NUM_VOXELS; i++) {
+			if(!movingFrame || !Moving)
+				voxelList[i].Render(projection, view, world * voxelMatrixList1[i]);
+			else
+				voxelList[i].Render(projection, view, world * voxelMatrixList2[i]);
+		}
+	}
+
+	Moving = false;
+}

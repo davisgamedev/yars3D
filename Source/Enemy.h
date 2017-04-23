@@ -29,6 +29,7 @@ public:
 			instance = nullptr;
 		}
 	}
+	vector3 GetPosition();
 
 	Enemy();
 	~Enemy();

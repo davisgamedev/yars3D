@@ -16,7 +16,7 @@ using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
 class AppClass : public ReEngAppClass
 {
-	PrimitiveClass* m_pPlayer = nullptr;
+	//PrimitiveClass* m_pPlayer = nullptr;
 	PrimitiveClass* m_pEnemy = nullptr;
 	PrimitiveClass* m_pBullet = nullptr;
 	PrimitiveClass* m_pKillBullet = nullptr;
@@ -32,6 +32,7 @@ class AppClass : public ReEngAppClass
 
 	vector3 playerPos;
 
+	int frameCount;
 
 	// TEMP ENEMY BULLET
 	Bullet* trackingBullet = nullptr;
