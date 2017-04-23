@@ -39,6 +39,11 @@ void Enemy::Move()
 	}
 }
 
+vector3 Enemy::GetPosition()
+{
+	return enemyPos;
+}
+
 matrix4 Enemy::GetMatrix()
 {
 	return enemyMatrix;

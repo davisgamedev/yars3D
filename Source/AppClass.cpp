@@ -129,10 +129,12 @@ void AppClass::Display(void)
 void AppClass::Release(void)
 {
 	SafeDelete(m_pPlayer);
+	SafeDelete(m_pEnemy);
 	SafeDelete(m_pBullet);
 	SafeDelete(m_pKillBullet);
 	SafeDelete(m_pTrackingBullet);
 	SafeDelete(trackingBullet); //TEMP
+	
 	player->ReleaseInstance();
 	player = nullptr;
 
