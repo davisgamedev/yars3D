@@ -126,10 +126,12 @@ void Player::WrapPlayer() { // Wraps player on vertical axis
 
 void Player::GenerateModel(vector3 color) {
 	if (voxelList == nullptr) {
+
 		voxelList = new PrimitiveClass[NUM_VOXELS];
 		for (int i = 0; i < NUM_VOXELS; i++) {
 			voxelList[i] = *(new PrimitiveClass());
 			voxelList[i].GenerateCube(SIZE_VOXELS, color);
+			
 		}
 	}
 }
