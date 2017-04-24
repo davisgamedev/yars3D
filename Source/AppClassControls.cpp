@@ -51,7 +51,7 @@ void AppClass::ProcessKeyboard(void)
 		player->SetPlayerDirection(0); //Set direction
 		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
 		{
-			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 10)));
+			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 7)));
 		}
 
 		player->MoveVertical(-fSpeed * 7); // slower than horizontal speed
@@ -61,7 +61,7 @@ void AppClass::ProcessKeyboard(void)
 		player->SetPlayerDirection(2); //Set direction
 		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
 		{
-			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 10)));
+			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 7)));
 		}
 
 		player->MoveVertical(fSpeed * 7);  // slower than horizontal speed

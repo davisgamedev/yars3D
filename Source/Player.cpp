@@ -12,6 +12,7 @@ Player::Player()
 
 	verticalBoundary = 4.0f; // set max/min vertical boundary (z axis)
 	horizontalBoundary = 6.5f; // set max/min horizontal boudnary (x axis)
+
 }
 
 

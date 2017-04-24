@@ -16,6 +16,10 @@ private:
 	bool active;  // Is the bullet dangerous
 	bool fired; // Is the bullet in motion
 
+	// Boudaries
+	float verticalBoundary;
+	float horizontalBoundary;
+
 public:
 	Bullet(vector3 userPos, int userDir, int type);
 	~Bullet();
@@ -26,6 +30,7 @@ public:
 	void BulletDamage(); // Do collision damage based on bullet type
 	void Fire(); // Bullet activates and moves depending on bullet type
 	void FireEnemy(vector3 playerPos);
+	void WrapBullet();
 	void ChangePosition(vector3 change); // Update method for position
 	bool GetActiveBullet(); // Get method for active state
 	void SetActiveBullet(bool isActive); // Set method for active state

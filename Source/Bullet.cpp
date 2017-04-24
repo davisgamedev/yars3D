@@ -12,6 +12,9 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 	active = false;
 	fired = false;
 
+	verticalBoundary = 4.0f; // set max/min vertical boundary (z axis)
+	horizontalBoundary = 6.5f; // set max/min horizontal boudnary (x axis)
+
 	switch (bulletType) {
 	case 0:
 		// Assign bullet details
@@ -209,6 +212,21 @@ void Bullet::ChangePosition(vector3 change)
 	{
 		bulletPos.z += change.z;
 		bulletM4 = glm::translate(bulletM4,change);
+		WrapBullet();
+	}
+}
+
+void Bullet::WrapBullet() { // Wraps player on vertical axis
+	if (bulletType == 1)
+	{
+		if (bulletPos.z > verticalBoundary) {
+			bulletPos.z = -verticalBoundary;
+			bulletM4 = glm::translate(IDENTITY_M4, bulletPos);
+		}
+		else if (bulletPos.z < -verticalBoundary) {
+			bulletPos.z = verticalBoundary;
+			bulletM4 = glm::translate(IDENTITY_M4, bulletPos);
+		}
 	}
 }
 
