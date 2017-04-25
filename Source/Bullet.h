@@ -17,8 +17,10 @@ private:
 	bool fired; // Is the bullet in motion
 
 	// Boudaries
-	float verticalBoundary;
-	float horizontalBoundary;
+	float verticalBoundaryTop;
+	float verticalBoundaryBottom;
+	float horizontalBoundaryLeft;
+	float horizontalBoundaryRight;
 
 public:
 	Bullet(vector3 userPos, int userDir, int type);

@@ -5,7 +5,7 @@ Enemy* Enemy::instance = nullptr;
 // create a new enemy instance
 Enemy::Enemy()
 {
-	enemyPos = vector3(5.0f, 0.0f, -1.25f);
+	enemyPos = vector3(9.0f, 0.0f, -1.25f);
 	enemyMatrix = glm::translate(enemyPos);
 	active = true;
 	counter = 1;

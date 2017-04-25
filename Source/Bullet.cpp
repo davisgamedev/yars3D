@@ -12,8 +12,10 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 	active = false;
 	fired = false;
 
-	verticalBoundary = 4.0f; // set max/min vertical boundary (z axis)
-	horizontalBoundary = 6.5f; // set max/min horizontal boudnary (x axis)
+	verticalBoundaryTop = 5.0f; // set max/min vertical boundary (z axis)
+	verticalBoundaryBottom = 5.75f; // set max/min vertical boundary (z axis)
+	horizontalBoundaryLeft = 9.35f; // set max/min horizontal boudnary (x axis)
+	horizontalBoundaryRight = 9.15f; // set max/min horizontal boudnary (x axis)
 
 	switch (bulletType) {
 	case 0:
@@ -22,8 +24,8 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 		break;
 	case 1:
 		// Assign bullet details
-		bulletPos.x = -6.0;
-		bulletM4 = glm::translate(-6.0f, 0.0f,bulletPos.z);
+		bulletPos.x = -9.35;
+		bulletM4 = glm::translate(-9.35f, 0.0f,bulletPos.z);
 		break;
 	case 2:
 		// Assign bullet details
@@ -97,7 +99,7 @@ void Bullet::Fire()
 		bulletPos += movement;
 		bulletM4 = glm::translate(bulletM4, movement);
 
-		if (bulletPos.z > 4.5f || bulletPos.z < -4.5f || bulletPos.x > 7.0f || bulletPos.x < -7.0f)
+		if (bulletPos.z > 6.0f || bulletPos.z < -6.5f || bulletPos.x > 10.0f || bulletPos.x < -10.0f)
 		{
 			active = false;
 			fired = false;
@@ -125,7 +127,7 @@ void Bullet::Fire()
 		bulletPos += movement;
 		bulletM4 = glm::translate(bulletM4, movement);
 
-		if (bulletPos.x > 7.0f)
+		if (bulletPos.x > 10.0f)
 		{
 			active = false;
 			fired = false;
@@ -219,12 +221,12 @@ void Bullet::ChangePosition(vector3 change)
 void Bullet::WrapBullet() { // Wraps player on vertical axis
 	if (bulletType == 1)
 	{
-		if (bulletPos.z > verticalBoundary) {
-			bulletPos.z = -verticalBoundary;
+		if (bulletPos.z > verticalBoundaryBottom) {
+			bulletPos.z = -verticalBoundaryTop;
 			bulletM4 = glm::translate(IDENTITY_M4, bulletPos);
 		}
-		else if (bulletPos.z < -verticalBoundary) {
-			bulletPos.z = verticalBoundary;
+		else if (bulletPos.z < -verticalBoundaryTop) {
+			bulletPos.z = verticalBoundaryBottom;
 			bulletM4 = glm::translate(IDENTITY_M4, bulletPos);
 		}
 	}

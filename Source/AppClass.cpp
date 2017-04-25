@@ -19,11 +19,11 @@ void AppClass::InitVariables(void)
 
 	//Initializing the primitives
 	//m_pPlayer->GenerateCube(0.5, REWHITE);
-	m_pEnemy->GenerateCube(0.5, REYELLOW);
+	m_pEnemy->GenerateCube(0.7, REYELLOW);
 
-	m_pBullet->GenerateCube(0.5, REBLUE);
-	m_pKillBullet->GenerateCube(0.5, REGREEN);
-	m_pTrackingBullet->GenerateCube(0.5, RERED);
+	m_pBullet->GenerateCube(0.2, REBLUE);
+	m_pKillBullet->GenerateCube(0.4, REGREEN);
+	m_pTrackingBullet->GenerateCube(0.3, RERED);
 
 	// Define player object
 	player = Player::GetInstance();
