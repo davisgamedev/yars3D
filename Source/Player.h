@@ -16,8 +16,10 @@ private:
 	int playerDir; // Int for direction of the player -- 0: Up, 1: Right, 2: Down, 3: Left
 
 	// Player boudaries
-	float verticalBoundary;
-	float horizontalBoundary;
+	float verticalBoundaryTop;
+	float verticalBoundaryBottom;
+	float horizontalBoundaryLeft;
+	float horizontalBoundaryRight;
 
 	//voxels
 	//handle array allocation in Generate

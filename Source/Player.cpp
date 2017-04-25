@@ -10,8 +10,10 @@ Player::Player()
 	mainBullet = new Bullet(playerPos,playerDir, 0); //Create initial bullet
 	killBullet = new Bullet(playerPos, playerDir, 1); //Create initial bullet
 
-	verticalBoundary = 4.0f; // set max/min vertical boundary (z axis)
-	horizontalBoundary = 6.5f; // set max/min horizontal boudnary (x axis)
+	verticalBoundaryTop = 5.0f; // set max/min vertical boundary (z axis)
+	verticalBoundaryBottom = 5.75f; // set max/min vertical boundary (z axis)
+	horizontalBoundaryLeft = 9.35f; // set max/min horizontal boudnary (x axis)
+	horizontalBoundaryRight = 9.15f; // set max/min horizontal boudnary (x axis)
 
 }
 
@@ -59,13 +61,13 @@ void Player::MoveHorizontal(float fIncrement) {
 	playerMat = glm::translate(playerMat, xIncrement);
 
 	// Check for horizontal boundary, prevent player from moving outside of it
-	if (playerPos.x > horizontalBoundary) { // Right Boundary
-		playerPos.x = horizontalBoundary;
+	if (playerPos.x > horizontalBoundaryRight) { // Right Boundary
+		playerPos.x = horizontalBoundaryRight;
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
 		
 	}
-	else if (playerPos.x < -horizontalBoundary) { // Left Boundary
-		playerPos.x = -horizontalBoundary;
+	else if (playerPos.x < -horizontalBoundaryLeft) { // Left Boundary
+		playerPos.x = -horizontalBoundaryLeft;
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
 	}
 
@@ -115,12 +117,12 @@ void Player::Shoot() // Shoot bullet
 }
 
 void Player::WrapPlayer() { // Wraps player on vertical axis
-	if (playerPos.z > verticalBoundary) {
-		playerPos.z = -verticalBoundary;
+	if (playerPos.z > verticalBoundaryBottom) {
+		playerPos.z = -verticalBoundaryTop;
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
 	}
-	else if (playerPos.z < -verticalBoundary) {
-		playerPos.z = verticalBoundary;
+	else if (playerPos.z < -verticalBoundaryTop) {
+		playerPos.z = verticalBoundaryBottom;
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
 	}
 }
