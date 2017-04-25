@@ -40,6 +40,20 @@ void AppClass::InitVariables(void)
 	trackingBullet = new Bullet(vector3(6.0f, 0.0f, 2.5f), 3, 2);
 	trackingBullet->SetActiveBullet(true);
 
+	// Audio Stuff
+	//String sRoute = m_pSystem->m_pFolder->GetFolderData();
+	//sRoute += m_pSystem->m_pFolder->GetFolderAudio();
+
+	//Background music
+	//soundBGM.openFromFile(sRoute + "elementary-wave-11.ogg");
+	//soundBGM.play();
+	//soundBGM.setLoop(true);
+
+	//sound effect
+	//soundBuffer.loadFromFile(sRoute + "12C.wav");
+	//sound.setBuffer(soundBuffer);
+	//Will be attached to space bar
+
 	frameCount = 0;
 }
 

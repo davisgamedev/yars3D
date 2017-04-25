@@ -11,6 +11,7 @@ Date: 2015/09
 #include "Bullet.h"
 #include "Camera.h"
 #include "Enemy.h"
+#include <SFML\Audio.hpp>
 
 using namespace ReEng; //Using ReEng namespace to use all the classes in the dll
 
@@ -36,6 +37,11 @@ class AppClass : public ReEngAppClass
 
 	// TEMP ENEMY BULLET
 	Bullet* trackingBullet = nullptr;
+
+	// Audio stuff
+	//sf::SoundBuffer soundBuffer;
+	//sf::Sound sound;
+	//sf::Music soundBGM;
 
 public:
 	typedef ReEngAppClass super;

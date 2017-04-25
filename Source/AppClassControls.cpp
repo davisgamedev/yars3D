@@ -99,6 +99,7 @@ void AppClass::ProcessKeyboard(void)
 	ON_KEY_PRESS_RELEASE(F4, NULL, m_pCameraMngr->SetCameraMode(CAMROTHOX));
 	static bool bFPSControll = false;
 	ON_KEY_PRESS_RELEASE(F, bFPSControll = !bFPSControll, m_pCameraMngr->SetFPS(bFPSControll));
+	//ON_KEY_PRESS_RELEASE(Space, NULL, sound.play());
 #pragma endregion
 }
 void AppClass::ProcessMouse(void)
