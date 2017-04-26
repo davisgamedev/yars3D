@@ -41,17 +41,17 @@ void AppClass::InitVariables(void)
 	trackingBullet->SetActiveBullet(true);
 
 	// Audio Stuff
-	//String sRoute = m_pSystem->m_pFolder->GetFolderData();
-	//sRoute += m_pSystem->m_pFolder->GetFolderAudio();
+	String sRoute = m_pSystem->m_pFolder->GetFolderData();
+	sRoute += m_pSystem->m_pFolder->GetFolderAudio();
 
 	//Background music
-	//soundBGM.openFromFile(sRoute + "elementary-wave-11.ogg");
-	//soundBGM.play();
-	//soundBGM.setLoop(true);
+	soundBGM.openFromFile(sRoute + "elementary-wave-11.ogg");
+	soundBGM.play();
+	soundBGM.setLoop(true);
 
 	//sound effect
-	//soundBuffer.loadFromFile(sRoute + "12C.wav");
-	//sound.setBuffer(soundBuffer);
+	soundBuffer.loadFromFile(sRoute + "SpaceGun04.wav");
+	sound.setBuffer(soundBuffer);
 	//Will be attached to space bar
 
 	frameCount = 0;
@@ -167,5 +167,6 @@ void AppClass::Release(void)
 	camera->ReleaseInstance();
 	camera = nullptr;
 
+	soundBGM.stop();
 	super::Release(); //release the memory of the inherited fields
 }

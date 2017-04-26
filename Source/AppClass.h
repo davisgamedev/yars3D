@@ -39,9 +39,9 @@ class AppClass : public ReEngAppClass
 	Bullet* trackingBullet = nullptr;
 
 	// Audio stuff
-	//sf::SoundBuffer soundBuffer;
-	//sf::Sound sound;
-	//sf::Music soundBGM;
+	sf::SoundBuffer soundBuffer;
+	sf::Sound sound;
+	sf::Music soundBGM;
 
 public:
 	typedef ReEngAppClass super;
