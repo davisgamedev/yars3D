@@ -81,6 +81,9 @@ void AppClass::Update(void)
 	m_pMeshMngr->Print("Current Frame: ", REYELLOW);
 	m_pMeshMngr->PrintLine(std::to_string(frameCount), RERED);
 
+	m_pMeshMngr->Print("PlayerDirection: ");
+	m_pMeshMngr->PrintLine(std::to_string(player->GetPlayerDirection()), RERED);
+
 	// update the enemy position
 	enemy->Move();
 

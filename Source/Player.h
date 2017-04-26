@@ -14,6 +14,7 @@ private:
 	vector3 playerPos; // vec3 for player position
 
 	int playerDir; // Int for direction of the player -- 0: Up, 1: Right, 2: Down, 3: Left
+	matrix4 rotationMat;
 
 	// Player boudaries
 	float verticalBoundaryTop;

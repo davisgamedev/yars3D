@@ -6,6 +6,7 @@ Player::Player()
 {
 	playerMat = IDENTITY_M4; // Matrix for all player transformations
 	playerPos = vector3(0.0f, 0.0f, 0.0f); // vec3 for player position, MAY NOT NEED THIS
+	rotationMat = IDENTITY_M4;
 
 	mainBullet = new Bullet(playerPos,playerDir, 0); //Create initial bullet
 	killBullet = new Bullet(playerPos, playerDir, 1); //Create initial bullet
@@ -15,6 +16,7 @@ Player::Player()
 	horizontalBoundaryLeft = 9.35f; // set max/min horizontal boudnary (x axis)
 	horizontalBoundaryRight = 9.15f; // set max/min horizontal boudnary (x axis)
 
+	playerDir = 1;
 }
 
 
@@ -84,6 +86,8 @@ int Player::GetPlayerDirection() { // return player's direction
 
 void Player::SetPlayerDirection(int dir) { // set player's direction
 	playerDir = dir;
+	rotationMat = glm::rotate(IDENTITY_M4, ((float)dir * 90.0f), vector3(0.0f, 1.0f, 0.0f));
+	//playerMat *= rotationMat;
 	// Don't want to change rotation every frame, just when it's direction changes
 	/*
 	if (playerDir = 0) { // UP
@@ -135,6 +139,7 @@ void Player::GenerateModel(vector3 color) {
 			voxelList[i] = *(new PrimitiveClass());
 			voxelList[i].GenerateCube(SIZE_VOXELS, color);
 			
+			
 		}
 	}
 }
@@ -142,10 +147,14 @@ void Player::GenerateModel(vector3 color) {
 void Player::Render(matrix4 projection, matrix4 view, matrix4 world, bool movingFrame) {
 	if (voxelList != nullptr) {
 		for (int i = 0; i < NUM_VOXELS; i++) {
-			if(!movingFrame || !Moving)
+			if (!movingFrame || !Moving) {
+				//voxelMatrixList1[i] *= rotationMat;
 				voxelList[i].Render(projection, view, world * voxelMatrixList1[i]);
-			else
+			}
+			else{
+				//voxelMatrixList2[i] *= rotationMat;
 				voxelList[i].Render(projection, view, world * voxelMatrixList2[i]);
+			}
 		}
 	}
 
