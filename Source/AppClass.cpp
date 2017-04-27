@@ -126,14 +126,6 @@ void AppClass::Display(void)
 	frameCount++;
 	//frameCount %= sizeof(int);
 	
-	//Matrices from the camera
-	//matrix4 m4Projection = m_pCameraMngr->GetProjectionMatrix();
-	//matrix4 m4View = m_pCameraMngr->GetViewMatrix();
-
-	// render the disruptor field
-	// render the disruptor field
-	//disruptorField.RenderCubes();
-	
 	// render cubes from field cubes array while modifying placement
 	vector3 currentLocation = vector3(-3.0f, -1.0f, -8.0f);
 	matrix4 disruptorMat = glm::translate(currentLocation);
@@ -157,8 +149,7 @@ void AppClass::Display(void)
 	// Get the player Matrix
 	matrix4 playerMatrix = player->GetPlayerMatrix();
 
-	//Renders the meshes using the specified position given by the matrix and in the specified color
-	// Render the Cube as the player
+	// Renders the meshes using the specified position given by the matrix and in the specified color
 	//m_pPlayer->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
 	player->Render(camera->GetProjection(false), camera->GetView(), playerMatrix, (frameCount/4)%2==0);
 
