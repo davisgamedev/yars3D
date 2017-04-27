@@ -24,12 +24,17 @@ class AppClass : public ReEngAppClass
 	PrimitiveClass* m_pTrackingBullet = nullptr;
 	matrix4 m_m4Cube;
 
+	// array of pointers to primitives for disruptor field
+	PrimitiveClass** fieldCubes;
+
 	// Player object
 	Player* player = nullptr;
 	// Camera object
 	Camera* camera = nullptr;
 	// Enemy object
 	Enemy* enemy = nullptr;
+	// disruptor field switch timer
+	int timer = 0;
 
 	vector3 playerPos;
 
@@ -44,6 +49,8 @@ class AppClass : public ReEngAppClass
 	sf::Music soundBGM;
 
 public:
+	PrimitiveClass** GenerateDisruptorField();
+	void SwitchColors();
 	typedef ReEngAppClass super;
 	/*
 	USAGE: Constructor
