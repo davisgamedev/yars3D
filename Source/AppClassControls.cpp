@@ -54,7 +54,7 @@ void AppClass::ProcessKeyboard(void)
 		player->SetPlayerDirection(0); //Set direction
 		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
 		{
-			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 7)));
+			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 7)), player->GetPlayerPosition());
 		}
 
 		player->MoveVertical(-fSpeed * 7); // slower than horizontal speed
@@ -64,7 +64,7 @@ void AppClass::ProcessKeyboard(void)
 		player->SetPlayerDirection(2); //Set direction
 		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
 		{
-			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 7)));
+			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 7)), player->GetPlayerPosition());
 		}
 
 		player->MoveVertical(fSpeed * 7);  // slower than horizontal speed
@@ -90,8 +90,11 @@ void AppClass::ProcessKeyboard(void)
 	//TEST KILL BULLET USING T -- Will be triggered by touching enemy core
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::T)) && player->killBullet->GetActiveBullet() == false) // Activate Kill Bullet
 	{
-		player->killBullet = new Bullet(playerPos, 1, 1);
-		player->killBullet->SetActiveBullet(true);
+		enemy->enemyBullet = new Bullet(enemy->GetPosition(), 3, 3);
+		enemy->enemyBullet->ChangePosition(vector3(0.0f, 0.0f, 0.0f), player->GetPlayerPosition());
+		enemy->Shoot();
+		//player->killBullet = new Bullet(playerPos, 1, 1);
+		//player->killBullet->SetActiveBullet(true);
 	}
 #pragma endregion
 

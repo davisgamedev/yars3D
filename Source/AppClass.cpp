@@ -17,6 +17,7 @@ void AppClass::InitVariables(void)
 	m_pKillBullet = new PrimitiveClass();
 	m_pTrackingBullet = new PrimitiveClass();
 
+
 	//Initializing the primitives
 	//m_pPlayer->GenerateCube(0.5, REWHITE);
 	m_pEnemy->GenerateCube(0.7, REYELLOW);
@@ -41,7 +42,8 @@ void AppClass::InitVariables(void)
 	// then do cube creation here
 	fieldCubes = GenerateDisruptorField();
 
-	// TEMP enemy bullet
+	// enemy bullets
+	enemy->enemyBullet = new Bullet(enemy->GetPosition(), 3, 3);
 	trackingBullet = new Bullet(vector3(6.0f, 0.0f, 2.5f), 3, 2);
 	trackingBullet->SetActiveBullet(true);
 
@@ -114,8 +116,17 @@ void AppClass::Update(void)
 		player->killBullet->Fire();
 	}
 
-	//Enemy Bullet Update
+	//Enemy Bullet Updates
 	trackingBullet->FireEnemy(player->GetPlayerPosition());
+
+	if (enemy->GetLaunch() == true)
+	{
+		enemy->enemyBullet->FireEnemy(player->GetPlayerPosition());
+	}
+	if (enemy->enemyBullet->GetActiveBullet() == false)
+	{
+		enemy->EndLaunch();
+	}
 }
 
 void AppClass::Display(void)
@@ -154,7 +165,23 @@ void AppClass::Display(void)
 	player->Render(camera->GetProjection(false), camera->GetView(), playerMatrix, (frameCount/4)%2==0);
 
 	// render another cube to represent the enemy
-	m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
+	if (enemy->enemyBullet->GetReturn() == true && enemy->GetFiring() == true)
+	{
+		enemy->SetFiring(false);
+		enemy->enemyBullet->SetReturn(false);
+	}
+	if (enemy->GetFiring() == true)
+	{
+		if (enemy->GetLaunch() == false)
+		{
+			EnemyLaunch();
+		}
+		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->enemyBullet->GetBulletMatrix());
+	}
+	else if (enemy->GetLaunch() == false)
+	{
+		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
+	}
 
 	//Display Bullets
 	if (player->mainBullet->GetActiveBullet() == true)
@@ -227,6 +254,13 @@ void AppClass::SwitchColors()
 	}
 }
 
+void AppClass::EnemyLaunch()
+{
+	enemy->enemyBullet = new Bullet(enemy->GetPosition(), 3, 3);
+	enemy->enemyBullet->ChangePosition(vector3(0.0f, 0.0f, 0.0f), player->GetPlayerPosition());
+	enemy->Shoot();
+}
+
 void AppClass::Release(void)
 {
 	//SafeDelete(m_pPlayer);
@@ -234,7 +268,7 @@ void AppClass::Release(void)
 	SafeDelete(m_pBullet);
 	SafeDelete(m_pKillBullet);
 	SafeDelete(m_pTrackingBullet);
-	SafeDelete(trackingBullet); //TEMP
+	SafeDelete(trackingBullet);
 	SafeDelete(fieldCubes);
 
 	player->ReleaseInstance();

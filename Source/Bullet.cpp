@@ -11,6 +11,7 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 	bulletDir = userDir;
 	active = false;
 	fired = false;
+	bReturn = false;
 
 	verticalBoundaryTop = 5.0f; // set max/min vertical boundary (z axis)
 	verticalBoundaryBottom = 5.75f; // set max/min vertical boundary (z axis)
@@ -33,6 +34,7 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 		break;
 	case 3:
 		// Assign bullet details
+		bulletM4 = glm::translate(bulletPos);
 		break;
 	default:
 		break;
@@ -202,19 +204,97 @@ void Bullet::FireEnemy(vector3 playerPos)
 		break;
 	case 3:
 		// Movement of bullet type 3
+
+
+		if (bulletPos.z > 7.0f || bulletPos.z < -7.5f || bulletPos.x > 12.0f || bulletPos.x < -12.0f)
+		{
+			active = false;
+			fired = false;
+			bReturn = true;
+		}
+		else
+		{
+			active = true;
+			movement = vector3(-0.3f, 0.0f, 0.0f);
+			bulletPos += movement;
+			bulletM4 = glm::translate(bulletM4, movement);
+
+
+				if (right == true)
+				{
+					if (lDist == true)
+					{
+						movement = vector3(0.0f, 0.0f, -0.1f);
+					}
+					else
+					{
+						movement = vector3(0.0f, 0.0f, -0.05f);
+					}
+					bulletPos += movement;
+					bulletM4 = glm::translate(bulletM4, movement);
+				}
+				else if (left == true)
+				{
+					if (lDist == true)
+					{
+						movement = vector3(0.0f, 0.0f, 0.1f);
+					}
+					else
+					{
+						movement = vector3(0.0f, 0.0f, 0.05f);
+					}
+					bulletPos += movement;
+					bulletM4 = glm::translate(bulletM4, movement);
+				}
+
+		}
 		break;
 	default:
 		break;
 	}
 }
 
-void Bullet::ChangePosition(vector3 change)
+void Bullet::ChangePosition(vector3 change, vector3 playerPos)
 {
 	if (bulletType == 1)
 	{
 		bulletPos.z += change.z;
 		bulletM4 = glm::translate(bulletM4,change);
 		WrapBullet();
+	}
+	else if (bulletType == 3)
+	{
+		if (playerPos.z < bulletPos.z + 1.0f && playerPos.z > bulletPos.z - 1.0f)
+		{
+			right = false;
+			left = false;
+		}
+		else if (playerPos.z < bulletPos.z)
+		{
+			right = true;
+			left = false;
+			if (bulletPos.z > 0.0f)
+			{
+				lDist = true;
+			}
+			else
+			{
+				lDist = false;
+			}
+		}
+		else if (playerPos.z > bulletPos.z)
+		{
+			left = true;
+			right = false;
+			if (bulletPos.z < 0.0f)
+			{
+				lDist = true;
+			}
+			else
+			{
+				lDist = false;
+			}
+		}
 	}
 }
 
@@ -240,6 +320,16 @@ bool Bullet::GetActiveBullet()
 void Bullet::SetActiveBullet(bool isActive)
 {
 	active = isActive;
+}
+
+bool Bullet::GetReturn()
+{
+	return bReturn;
+}
+
+void Bullet::SetReturn(bool isReturn)
+{
+	bReturn = isReturn;
 }
 
 bool Bullet::GetFired()

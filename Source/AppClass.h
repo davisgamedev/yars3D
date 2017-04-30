@@ -40,7 +40,7 @@ class AppClass : public ReEngAppClass
 
 	int frameCount;
 
-	// TEMP ENEMY BULLET
+	// ENEMY BULLETS
 	Bullet* trackingBullet = nullptr;
 
 	// Audio stuff
@@ -51,6 +51,7 @@ class AppClass : public ReEngAppClass
 public:
 	PrimitiveClass** GenerateDisruptorField();
 	void SwitchColors();
+	void EnemyLaunch();
 	typedef ReEngAppClass super;
 	/*
 	USAGE: Constructor

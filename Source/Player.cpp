@@ -26,6 +26,8 @@ Player::~Player()
 		delete[] voxelList;
 		voxelList = nullptr;
 	}
+	SafeDelete(mainBullet);
+	SafeDelete(killBullet);
 }
 
 // Get the Player's transformation matrix

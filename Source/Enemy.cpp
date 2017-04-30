@@ -9,7 +9,11 @@ Enemy::Enemy()
 	enemyMatrix = glm::translate(enemyPos);
 	active = true;
 	counter = 1;
+	counterFire = 1;
 	direction = true;
+	launched = false;
+	firing = false;
+	fireTiming = (rand() % 500 + 200);
 }
 
 // move the enemy back and forth while the level is in progress and the enemy is "active"
@@ -34,9 +38,43 @@ void Enemy::Move()
 			counter = 0;
 		}
 
-		// increment the counter each frame
+		// increment the counters each frame
 		counter++;
+		counterFire++;
+
+		//Decide when to Shoot
+		if (counterFire == fireTiming && firing == false)
+		{
+			firing = true;
+			counterFire = 1;
+			fireTiming = (rand() % 500 + 200);
+		} 
 	}
+}
+
+void Enemy::Shoot()
+{
+	launched = true;
+}
+
+void Enemy::EndLaunch()
+{
+	launched = false;
+}
+
+bool Enemy::GetLaunch()
+{
+	return launched;
+}
+
+bool Enemy::GetFiring()
+{
+	return firing;
+}
+
+void Enemy::SetFiring(bool setFire)
+{
+	firing = setFire;
 }
 
 vector3 Enemy::GetPosition()
@@ -51,4 +89,5 @@ matrix4 Enemy::GetMatrix()
 
 Enemy::~Enemy()
 {
+	SafeDelete(enemyBullet);
 }
