@@ -14,6 +14,7 @@ private:
 	vector3 playerPos; // vec3 for player position
 
 	int playerDir; // Int for direction of the player -- 0: Up, 1: Right, 2: Down, 3: Left
+	int prevPlayerDir;
 	matrix4 rotationMat;
 
 	// Player boudaries
@@ -119,6 +120,8 @@ public:
 	vector3 GetPlayerPosition(); // Get the player's position
 	int GetPlayerDirection(); // Get the player's direction
 	void SetPlayerDirection(int dir); // Sets the player's direction
+	int GetPrevPlayerDirection(); // Get the player's direction
+	void SetPrevPlayerDirection(int prevDir); // Sets the player's direction
 	void WrapPlayer();
 	void GenerateModel(vector3 color);
 	void Render(matrix4 projection, matrix4 view, matrix4 world, bool movingFrame);

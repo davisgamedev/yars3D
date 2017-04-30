@@ -44,10 +44,13 @@ void AppClass::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
 		m_pCameraMngr->MoveVertical(fSpeed);
 
+
+
 	// Player movement
 	// else statements so player can only move in one direction at a time (no diagonal)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // Move up
 	{
+		
 		player->SetPlayerDirection(0); //Set direction
 		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
 		{

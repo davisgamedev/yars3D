@@ -15,7 +15,7 @@ Player::Player()
 	verticalBoundaryBottom = 5.75f; // set max/min vertical boundary (z axis)
 	horizontalBoundaryLeft = 9.35f; // set max/min horizontal boudnary (x axis)
 	horizontalBoundaryRight = 9.15f; // set max/min horizontal boudnary (x axis)
-
+	prevPlayerDir = 1;
 	playerDir = 1;
 }
 
@@ -66,6 +66,7 @@ void Player::MoveHorizontal(float fIncrement) {
 	if (playerPos.x > horizontalBoundaryRight) { // Right Boundary
 		playerPos.x = horizontalBoundaryRight;
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
+
 		
 	}
 	else if (playerPos.x < -horizontalBoundaryLeft) { // Left Boundary
@@ -104,6 +105,16 @@ void Player::SetPlayerDirection(int dir) { // set player's direction
 		playerMat = glm::rotate(playerMat, -1.0f, vector3(0.0f, 1.0f, 0.0f));
 	}
 	*/
+}
+
+int Player::GetPrevPlayerDirection() { // return player's direction
+	return prevPlayerDir;
+}
+
+void Player::SetPrevPlayerDirection(int prevDir) { // set player's direction
+	prevPlayerDir = prevDir;
+	//rotationMat = glm::rotate(IDENTITY_M4, ((float)dir * 90.0f), vector3(0.0f, 1.0f, 0.0f));
+
 }
 
 void Player::Shoot() // Shoot bullet
