@@ -17,6 +17,9 @@ private:
 	int prevPlayerDir;
 	matrix4 rotationMat;
 
+	// keep track of if player is in disruptor field
+	bool inField;
+
 	// Player boudaries
 	float verticalBoundaryTop;
 	float verticalBoundaryBottom;
@@ -125,6 +128,8 @@ public:
 	void WrapPlayer();
 	void GenerateModel(vector3 color);
 	void Render(matrix4 projection, matrix4 view, matrix4 world, bool movingFrame);
+	void setInFieldBool(bool inFld);
+	bool getInFieldBool();
 	bool Moving = false;
 };
 

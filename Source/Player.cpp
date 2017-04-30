@@ -17,6 +17,7 @@ Player::Player()
 	horizontalBoundaryRight = 9.15f; // set max/min horizontal boudnary (x axis)
 	prevPlayerDir = 1;
 	playerDir = 1;
+	inField = false;
 }
 
 
@@ -76,6 +77,14 @@ void Player::MoveHorizontal(float fIncrement) {
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
 	}
 
+	// Check if player is in the disruptor field
+	if (playerPos.x >= -3.5f && playerPos.x <= 0.5f) {
+		inField = true;
+	}
+	else {
+		inField = false;
+	}
+
 	Moving = true;
 }
 
@@ -121,15 +130,18 @@ void Player::SetPrevPlayerDirection(int prevDir) { // set player's direction
 
 void Player::Shoot() // Shoot bullet
 {
-	if (killBullet->GetActiveBullet() == false || killBullet->GetFired() == true) // Kill Bullet
-	{
-		mainBullet = new Bullet(playerPos, playerDir, 0);
-		mainBullet->SetActiveBullet(true);
-		mainBullet->SetFired(true);
-	}
-	else if (killBullet->GetActiveBullet() == true && killBullet->GetFired() == false)//Main Bullet 
-	{
-		killBullet->SetFired(true);
+	// only shoot player bullet or kill bullet if player is not in the disruptor field
+	if (inField == false) {
+		if (killBullet->GetActiveBullet() == false || killBullet->GetFired() == true) // Kill Bullet
+		{
+			mainBullet = new Bullet(playerPos, playerDir, 0);
+			mainBullet->SetActiveBullet(true);
+			mainBullet->SetFired(true);
+		}
+		else if (killBullet->GetActiveBullet() == true && killBullet->GetFired() == false)//Main Bullet 
+		{
+			killBullet->SetFired(true);
+		}
 	}
 }
 
@@ -142,6 +154,14 @@ void Player::WrapPlayer() { // Wraps player on vertical axis
 		playerPos.z = verticalBoundaryBottom;
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
 	}
+}
+
+void Player::setInFieldBool(bool inFld) { // set in Field bool
+	inField = inFld;
+}
+
+bool Player::getInFieldBool() { // get in Field bool
+	return inField;
 }
 
 void Player::GenerateModel(vector3 color) {
