@@ -38,7 +38,8 @@ void AppClass::InitVariables(void)
 	camera = Camera::GetInstance();
 
 	// add disruptor array reference
-	fieldCubes = new PrimitiveClass*[72];
+	//fieldCubes = new PrimitiveClass*[72];
+	fieldCubes = new PrimitiveClass*[numCubes];
 	// then do cube creation here
 	fieldCubes = GenerateDisruptorField();
 
@@ -138,23 +139,25 @@ void AppClass::Display(void)
 	//frameCount %= sizeof(int);
 	
 	// render cubes from field cubes array while modifying placement
-	vector3 currentLocation = vector3(-3.0f, -1.0f, -8.0f);
+	vector3 currentLocation = vector3(-3.0f, -1.0f, -6.5f);
 	matrix4 disruptorMat = glm::translate(currentLocation);
-	for (int i = 0; i < 72; i++)
+	matrix4 disRot = glm::rotate(IDENTITY_M4, 90.0f, vector3(1.0f, 0.0f, 0.0f)); //for rotating the planes
+	for (int i = 0; i < numCubes; i++)
 	{
 		disruptorMat = glm::translate(currentLocation);
 
-		// if modulus 4, else add one in z and go back to -3 x
-		if (i % 4 == 0)
+		// if modulus 4, else add one in z and go back to -3 x\
+		// if modulus (i+1) [fixes last and first pixel messup] mod (1/sizecubes) [interval of width based on size]
+		if ((i+1) % (4 * (int)(1/sizeCubes)) == 0)
 		{
-			currentLocation = vector3(-3.0f, -1.0f, currentLocation.z + 1);
+			currentLocation = vector3(-3.0f, -1.0f, currentLocation.z + sizeCubes);
 		}
 		else
 		{
-			currentLocation += vector3(1.0f, 0.0f, 0.0f);
+			currentLocation += vector3(sizeCubes, 0.0f, 0.0f);
 		}
 
-		fieldCubes[i]->Render(camera->GetProjection(false), camera->GetView(), disruptorMat);
+		fieldCubes[i]->Render(camera->GetProjection(false), camera->GetView(), disruptorMat * disRot);
 	}
 
 	// Get the player Matrix
@@ -211,10 +214,10 @@ void AppClass::Display(void)
 // creates a list of pointers to primitives for the disruptor field
 PrimitiveClass** AppClass::GenerateDisruptorField()
 {
-	PrimitiveClass** temp = new PrimitiveClass*[72];
+	PrimitiveClass** temp = new PrimitiveClass*[numCubes];
 
 	// create the primitives to be used in the disruptor field rendering
-	for (int i = 0; i < 72; i++)
+	for (int i = 0; i < numCubes; i++)
 	{
 		// determine color for each block
 		vector3 color;
@@ -237,7 +240,8 @@ PrimitiveClass** AppClass::GenerateDisruptorField()
 		}
 
 		PrimitiveClass* block = new PrimitiveClass();
-		block->GenerateCube(1.0, color);
+		//block->GenerateCube(1.0, color);
+		block->GeneratePlane(sizeCubes, color);
 		temp[i] = block;
 	}
 
@@ -246,10 +250,10 @@ PrimitiveClass** AppClass::GenerateDisruptorField()
 
 void AppClass::SwitchColors()
 {
-	for (int i = 0; i < 72; i++)
+	for (int i = 0; i < numCubes; i++)
 	{
 		// determine color for each cube
-		int num2 = rand() % 72;
+		int num2 = rand() % numCubes;
 		fieldCubes[i]->Swap(*fieldCubes[num2]);
 	}
 }

@@ -26,6 +26,8 @@ class AppClass : public ReEngAppClass
 
 	// array of pointers to primitives for disruptor field
 	PrimitiveClass** fieldCubes;
+	const int numCubes = 216;
+	const float sizeCubes = 0.5f;
 
 	// Player object
 	Player* player = nullptr;

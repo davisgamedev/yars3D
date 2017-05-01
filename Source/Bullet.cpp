@@ -113,13 +113,13 @@ void Bullet::Fire()
 				movement = vector3(0.0, 0.0, -0.2);
 				break;
 			case 1:
-				movement = vector3(0.2, 0.0, 0.0);
+				movement = vector3(-0.2, 0.0, 0.0);
 				break;
 			case 2:
 				movement = vector3(0.0, 0.0, 0.2);
 				break;
 			case 3:
-				movement = vector3(-0.2, 0.0, 0.0);
+				movement = vector3(0.2, 0.0, 0.0);
 				break;
 			}
 		}

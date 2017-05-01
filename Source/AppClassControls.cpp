@@ -51,7 +51,7 @@ void AppClass::ProcessKeyboard(void)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // Move up
 	{
 		
-		player->SetPlayerDirection(0); //Set direction
+		player->SetPlayerDirection(1); //Set direction
 		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
 		{
 			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 7)), player->GetPlayerPosition());
@@ -61,7 +61,7 @@ void AppClass::ProcessKeyboard(void)
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // Move down
 	{
-		player->SetPlayerDirection(2); //Set direction
+		player->SetPlayerDirection(3); //Set direction
 		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
 		{
 			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 7)), player->GetPlayerPosition());
@@ -71,12 +71,12 @@ void AppClass::ProcessKeyboard(void)
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // Move left
 	{
-		player->SetPlayerDirection(3); //Set direction
+		player->SetPlayerDirection(2); //Set direction
 		player->MoveHorizontal(-fSpeed * 10);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Move right
 	{
-		player->SetPlayerDirection(1); //Set direction
+		player->SetPlayerDirection(0); //Set direction
 		player->MoveHorizontal(fSpeed * 10);
 	}
 

@@ -99,23 +99,6 @@ int Player::GetPlayerDirection() { // return player's direction
 void Player::SetPlayerDirection(int dir) { // set player's direction
 	playerDir = dir;
 	rotationMat = glm::rotate(IDENTITY_M4, ((float)dir * 90.0f), vector3(0.0f, 1.0f, 0.0f));
-	//playerMat *= rotationMat;
-	// Don't want to change rotation every frame, just when it's direction changes
-	/*
-	if (playerDir = 0) { // UP
-		playerMat = glm::rotate(playerMat, -1.0f, vector3(0.0f, 1.0f, 0.0f));
-		//glm::rotate(player)
-	}
-	else if (playerDir = 1) { // RIGHT
-		playerMat = glm::rotate(playerMat, 1.0f, vector3(0.0f, 1.0f, 0.0f));
-	}
-	else if (playerDir = 2) { // DOWN
-		playerMat = glm::rotate(playerMat, 1.0f, vector3(0.0f, 1.0f, 0.0f));
-	}
-	else if (playerDir = 3) { // LEFT
-		playerMat = glm::rotate(playerMat, -1.0f, vector3(0.0f, 1.0f, 0.0f));
-	}
-	*/
 }
 
 int Player::GetPrevPlayerDirection() { // return player's direction
@@ -134,7 +117,7 @@ void Player::Shoot() // Shoot bullet
 	if (inField == false) {
 		if (killBullet->GetActiveBullet() == false || killBullet->GetFired() == true) // Kill Bullet
 		{
-			mainBullet = new Bullet(playerPos, playerDir, 0);
+			mainBullet = new Bullet(playerPos, (playerDir+3)%4, 0);
 			mainBullet->SetActiveBullet(true);
 			mainBullet->SetFired(true);
 		}
@@ -181,12 +164,10 @@ void Player::Render(matrix4 projection, matrix4 view, matrix4 world, bool moving
 	if (voxelList != nullptr) {
 		for (int i = 0; i < NUM_VOXELS; i++) {
 			if (!movingFrame || !Moving) {
-				//voxelMatrixList1[i] *= rotationMat;
-				voxelList[i].Render(projection, view, world * voxelMatrixList1[i]);
+				voxelList[i].Render(projection, view, world * rotationMat * voxelMatrixList1[i]);
 			}
 			else{
-				//voxelMatrixList2[i] *= rotationMat;
-				voxelList[i].Render(projection, view, world * voxelMatrixList2[i]);
+				voxelList[i].Render(projection, view, world * rotationMat * voxelMatrixList2[i]);
 			}
 		}
 	}
