@@ -261,16 +261,14 @@ void AppClass::Display(void)
 		{
 			m_pBullet->Render(camera->GetProjection(false), camera->GetView(), player->mainBullet->GetBulletMatrix());
 		}
-<<<<<<< HEAD
-=======
+
+		else if (enemy->GetLaunch() == false)
+		{
+			m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
+		}
+
 		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->enemyBullet->GetBulletMatrix());
-	}
-	else if (enemy->GetLaunch() == false)
-	{
-		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
-	}
-	enemy->RenderModel(camera->GetProjection(false), camera->GetView());
->>>>>>> 8a0ac2b8be2c1445760ab987af8324dce297f67b
+		enemy->RenderModel(camera->GetProjection(false), camera->GetView());
 
 		if (player->killBullet->GetActiveBullet() == true)
 		{
@@ -285,7 +283,7 @@ void AppClass::Display(void)
 		//Render the grid based on the camera's mode:
 		m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
 
-	} //END GAME MODE
+	}//END GAME MODE
 	
 	m_pMeshMngr->Render(); //renders the render list
 	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
