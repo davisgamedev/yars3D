@@ -205,7 +205,7 @@ void Bullet::FireEnemy(vector3 playerPos)
 		break;
 	case 3:
 		// Movement of bullet type 3
-
+		bulletM4 = glm::rotate(bulletM4, -spin, vector3(0.0f, 1.0f, 0.0f));
 
 		if (bulletPos.z > 7.0f || bulletPos.z < -7.5f || bulletPos.x > 12.0f || bulletPos.x < -12.0f)
 		{
@@ -244,13 +244,16 @@ void Bullet::FireEnemy(vector3 playerPos)
 					{
 						movement = vector3(0.0f, 0.0f, 0.05f);
 					}
-					spin = spin + 10;
+
+
 					bulletPos += movement;
 					bulletM4 = glm::translate(bulletM4, movement);
 
 				}
 
 		}
+		spin = spin + 10;
+		bulletM4 = glm::rotate(bulletM4, spin, vector3(0.0f, 1.0f, 0.0f));
 		break;
 	default:
 		break;
@@ -314,6 +317,7 @@ void Bullet::WrapBullet() { // Wraps player on vertical axis
 		}
 	}
 }
+
 
 bool Bullet::GetActiveBullet()
 {
