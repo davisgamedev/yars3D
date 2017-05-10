@@ -19,6 +19,7 @@ private:
 	bool right; // Special bullet 3 bool for direction
 	bool lDist; // Special bool for bullet 3 long distance
 	bool bReturn; // Return bullet 3
+	float spin; // Rotation Angle for bullet 3
 
 	// Boudaries
 	float verticalBoundaryTop;

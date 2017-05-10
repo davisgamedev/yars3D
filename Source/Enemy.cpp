@@ -14,6 +14,7 @@ Enemy::Enemy()
 	launched = false;
 	firing = false;
 	fireTiming = (rand() % 500 + 200);
+	spin = 0;
 }
 
 // move the enemy back and forth while the level is in progress and the enemy is "active"
@@ -42,10 +43,11 @@ void Enemy::Move()
 		counter++;
 		counterFire++;
 
-		///// here ya go chris
-		if (counterFire > (fireTiming * .65f))
+		//Start Spinning before launching
+		if ((counterFire > (fireTiming * .65f)))
 		{
-			enemyMatrix = glm::rotate(enemyMatrix, 5.0f, vector3(0.0f, 1.0f, 0.0f));
+			spin = spin + 10;
+			enemyMatrix = glm::rotate(enemyMatrix, spin, vector3(0.0f, 1.0f, 0.0f));
 		}
 
 		//Decide when to Shoot

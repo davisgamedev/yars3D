@@ -16,6 +16,7 @@ private:
 	bool firing; // whether or not the enemy is in firing mode (loading up a bullet to shoot, maybe represented by a spinning cube?)
 	bool launched; // when the enemy actually shoots itself
 	int fireTiming; // when to fire itself
+	float spin; // angle of rotation before launching
 	
 	static Enemy* instance;
 public:

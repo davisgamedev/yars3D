@@ -35,6 +35,7 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 	case 3:
 		// Assign bullet details
 		bulletM4 = glm::translate(bulletPos);
+		spin = 0;
 		break;
 	default:
 		break;
@@ -243,8 +244,10 @@ void Bullet::FireEnemy(vector3 playerPos)
 					{
 						movement = vector3(0.0f, 0.0f, 0.05f);
 					}
+					spin = spin + 10;
 					bulletPos += movement;
 					bulletM4 = glm::translate(bulletM4, movement);
+
 				}
 
 		}
