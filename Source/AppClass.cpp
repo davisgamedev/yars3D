@@ -185,6 +185,7 @@ void AppClass::Display(void)
 	{
 		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
 	}
+	enemy->RenderModel(camera->GetProjection(false), camera->GetView());
 
 	//Display Bullets
 	if (player->mainBullet->GetActiveBullet() == true)

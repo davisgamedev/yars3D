@@ -31,7 +31,7 @@ private:
 	//handle deletion in class deconstructor
 	PrimitiveClass* voxelList = nullptr;
 	const int NUM_VOXELS = 26;
-	const float SIZE_VOXELS = 0.125f;
+	const float SIZE_VOXELS = 0.08f;
 	matrix4 voxelMatrixList1[26] = {
 		glm::translate(IDENTITY_M4, vector3(1.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),
 		glm::translate(IDENTITY_M4, vector3(2.5f * SIZE_VOXELS, 0.0f, 0.5f * SIZE_VOXELS)),

@@ -19,6 +19,32 @@ private:
 	float spin; // angle of rotation before launching
 	
 	static Enemy* instance;
+
+
+	PrimitiveClass* voxelList = nullptr;
+	const int NUM_VOXELS = 64;
+	const float SIZE_VOXELS = 0.5f;
+	static const int BARRIER_H = 14;
+	static const int BARRIER_W = 8;
+	const vector3 BARRIER_COMP = vector3(7.0f * SIZE_VOXELS, 0.0f, 6.5f * SIZE_VOXELS);
+	const bool BARRIER_REF[BARRIER_H][BARRIER_W] = {
+		{ 0, 0, 0, 0, 1, 1, 1, 1 },
+		{ 0, 0, 0, 1, 1, 1, 1, 1 },
+		{ 0, 0, 1, 1, 1, 1, 1, 0 },
+		{ 0, 1, 1, 1, 1, 1, 0, 0 },
+		{ 1, 1, 1, 1, 1, 0, 0, 0 },
+		{ 1, 1, 1, 1, 0, 0, 0, 0 },
+		{ 1, 1, 1, 1, 0, 0, 0, 0 },
+		{ 1, 1, 1, 1, 0, 0, 0, 0 },
+		{ 1, 1, 1, 1, 0, 0, 0, 0 },
+		{ 1, 1, 1, 1, 1, 0, 0, 0 },
+		{ 0, 1, 1, 1, 1, 1, 0, 0 },
+		{ 0, 0, 1, 1, 1, 1, 1, 0 },
+		{ 0, 0, 0, 1, 1, 1, 1, 1 },
+		{ 0, 0, 0, 0, 1, 1, 1, 1 }
+	};
+	bool barrierVals[BARRIER_H][BARRIER_W];
+
 public:
 	static Enemy* GetInstance() {
 		if (instance == nullptr) {
@@ -41,6 +67,9 @@ public:
 	bool GetLaunch();
 	void EndLaunch();
 	void Shoot();
+	void Reset();
+	void GenerateModel(vector3 color);
+	void RenderModel(matrix4 projection, matrix4 view);
 
 	Enemy();
 	~Enemy();
