@@ -94,6 +94,26 @@ void AppClass::ProcessKeyboard(void)
 		player->killBullet = new Bullet(playerPos, 1, 1);
 		player->killBullet->SetActiveBullet(true);
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) // TESTING STUFF
+	{
+		if (gameState == 1) {
+			dead = true;
+			gameState = 2;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) // CHANGE GAME STATE
+	{
+		if (gameState == 0) {
+			gameState = 1;
+		}
+		else if (gameState == 2) {
+			win = false;
+			dead = false;
+			gameState = 1;
+		}
+	}
 #pragma endregion
 
 #pragma region Other Actions

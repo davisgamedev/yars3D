@@ -24,6 +24,14 @@ class AppClass : public ReEngAppClass
 	PrimitiveClass* m_pTrackingBullet = nullptr;
 	matrix4 m_m4Cube;
 
+	//GAME STATE VARIABLES
+	int gameState = 0;
+	bool dead = false;
+	bool win = false;
+
+	//Enum for game states
+	enum STATE {BEGIN = 0, GAME = 1, END = 2};
+
 	// array of pointers to primitives for disruptor field
 	PrimitiveClass** fieldCubes;
 	const int numCubes = 216;

@@ -216,7 +216,17 @@ void Bullet::FireEnemy(vector3 playerPos)
 		else
 		{
 			active = true;
-			movement = vector3(-0.3f, 0.0f, 0.0f);
+			if (playerPos.x > 8.0f) {
+				if (right == true) {
+					movement = vector3(0.0f, 0.0f, -0.3f);
+				}
+				else {
+					movement = vector3(0.0f, 0.0f, 0.3f);
+				}
+			}
+			else {
+				movement = vector3(-0.3f, 0.0f, 0.0f);
+			}
 			bulletPos += movement;
 			bulletM4 = glm::translate(bulletM4, movement);
 
