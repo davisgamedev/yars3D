@@ -261,6 +261,16 @@ void AppClass::Display(void)
 		{
 			m_pBullet->Render(camera->GetProjection(false), camera->GetView(), player->mainBullet->GetBulletMatrix());
 		}
+<<<<<<< HEAD
+=======
+		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->enemyBullet->GetBulletMatrix());
+	}
+	else if (enemy->GetLaunch() == false)
+	{
+		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
+	}
+	enemy->RenderModel(camera->GetProjection(false), camera->GetView());
+>>>>>>> 8a0ac2b8be2c1445760ab987af8324dce297f67b
 
 		if (player->killBullet->GetActiveBullet() == true)
 		{

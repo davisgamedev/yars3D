@@ -15,6 +15,39 @@ Enemy::Enemy()
 	firing = false;
 	fireTiming = (rand() % 500 + 200);
 	spin = 0;
+
+	Reset();
+}
+
+void Enemy::GenerateModel(vector3 color) {
+	if (voxelList == nullptr) {
+		voxelList = new PrimitiveClass[NUM_VOXELS];
+		for (int i = 0; i < NUM_VOXELS; i++) {
+			voxelList[i] = *(new PrimitiveClass());
+			voxelList[i].GenerateCube(SIZE_VOXELS, color);
+		}
+	}
+}
+
+void Enemy::RenderModel(matrix4 projection, matrix4 view) {
+	int i = 0;
+	for (int h = 0; h < BARRIER_H; h++) {
+		for (int w = 0; w < BARRIER_W; w++) {
+			if (!barrierVals[h][w]) continue;
+			vector3 voxelPos = vector3(w * SIZE_VOXELS, 0.0f, h * SIZE_VOXELS);
+			matrix4 localMat = glm::translate(IDENTITY_M4, (enemyPos - BARRIER_COMP) + voxelPos);
+			voxelList[i++].Render(projection, view, localMat);
+		}
+	}
+}
+
+void Enemy::Reset() {
+	if (voxelList == nullptr) GenerateModel(REBROWN);
+	for (int h = 0; h < BARRIER_H; h++) {
+		for (int w = 0; w < BARRIER_W; w++) {
+			barrierVals[h][w] = BARRIER_REF[h][w];
+		}
+	}
 }
 
 // move the enemy back and forth while the level is in progress and the enemy is "active"
@@ -57,6 +90,8 @@ void Enemy::Move()
 			counterFire = 1;
 			fireTiming = (rand() % 500 + 200);
 		} 
+
+		
 	}
 
 	
@@ -99,5 +134,9 @@ matrix4 Enemy::GetMatrix()
 
 Enemy::~Enemy()
 {
+	if (voxelList != nullptr) {
+		delete[] voxelList;
+		voxelList = nullptr;
+	}
 	SafeDelete(enemyBullet);
 }
