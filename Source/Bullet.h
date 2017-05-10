@@ -33,6 +33,8 @@ public:
 
 	// Methods
 	matrix4 GetBulletMatrix(); // Get method for the matrix
+	vector3 GetBulletPos(); // Get bullet position
+	int GetBulletType(); // Get bullet type
 	void Disrupted(); // Alter bullet behavior depending on bullet type
 	void BulletDamage(); // Do collision damage based on bullet type
 	void Fire(); // Bullet activates and moves depending on bullet type

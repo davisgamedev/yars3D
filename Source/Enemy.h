@@ -2,6 +2,7 @@
 #include "RE\ReEngAppClass.h"
 #include <SFML\Graphics.hpp>
 #include "Bullet.h"
+#include "Player.h"
 
 class Enemy
 {
@@ -70,6 +71,9 @@ public:
 	void Reset();
 	void GenerateModel(vector3 color);
 	void RenderModel(matrix4 projection, matrix4 view);
+	void DetectBarrierCollisions(Bullet* playerBullet, Player* player);
+	void DetectEnemyCollisions(Player* player);
+	void DetectEnemyKillShot(Bullet* bullet);
 
 	Enemy();
 	~Enemy();

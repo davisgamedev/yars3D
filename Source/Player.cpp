@@ -88,6 +88,28 @@ void Player::MoveHorizontal(float fIncrement) {
 	Moving = true;
 }
 
+void Player::DetectCollisions(Bullet* bullet)
+{
+	vector3 bulletPos = bullet->GetBulletPos();
+	int type = bullet->GetBulletType();
+
+	switch (type)
+	{
+	case '0':
+		// player bullet, do nothing
+		break;
+	case '1':
+		// collisions with kill bullet (yes player can kill themself with kill bullet)
+		break;
+	case '2': 
+		// collisions with tracking bullet
+		break;
+	case '3':
+		// collisions with enemy bullet (enemy itself when its launched)
+		break;
+	}
+}
+
 vector3 Player::GetPlayerPosition() { // return player's position
 	return playerPos;
 }

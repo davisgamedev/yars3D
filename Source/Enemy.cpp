@@ -97,6 +97,38 @@ void Enemy::Move()
 	
 }
 
+void Enemy::DetectBarrierCollisions(Bullet* playerBullet, Player* player)
+{
+	// get locations of the bullet to check and player to check
+	vector3 bulletPos = playerBullet->GetBulletPos();
+	vector3 playerPos = player->GetPlayerPosition();
+	int type = playerBullet->GetBulletType();
+
+	// only check collisions between barrier and bullet types of 0 and 1
+
+	// check if current bullet pos or player pos are "hitting" a voxel in barrier
+}
+
+void Enemy::DetectEnemyCollisions(Player* player)
+{
+	vector3 playerPos = player->GetPlayerPosition();
+
+	// detect if player position x and z are overlapping enemy // aabb
+	
+}
+
+void Enemy::DetectEnemyKillShot(Bullet* bullet)
+{
+	int type = bullet->GetBulletType();
+	vector3 bulletPos = bullet->GetBulletPos();
+
+	// if bullet type is kill bullet, detect collisions with enemy
+	if (type == 1)
+	{
+		// do stuffz
+	}
+}
+
 void Enemy::Shoot()
 {
 	launched = true;

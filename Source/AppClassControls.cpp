@@ -17,8 +17,8 @@ void AppClass::ProcessKeyboard(void)
 #pragma endregion
 
 #pragma region Modifiers
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-		bModifier = true;
+	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+		//bModifier = true;
 #pragma endregion
 
 #pragma region Camera Positioning

@@ -25,7 +25,7 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 		break;
 	case 1:
 		// Assign bullet details
-		bulletPos.x = -9.35;
+		bulletPos.x = -9.35f;
 		bulletM4 = glm::translate(-9.35f, 0.0f,bulletPos.z);
 		break;
 	case 2:
@@ -42,6 +42,11 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 	}
 }
 
+// get method for bullet vector
+vector3 Bullet::GetBulletPos()
+{
+	return bulletPos;
+}
 
 // Get method for the matrix
 matrix4 Bullet::GetBulletMatrix()
@@ -49,6 +54,11 @@ matrix4 Bullet::GetBulletMatrix()
 	return bulletM4;
 }
 
+// get method for bullet type
+int Bullet::GetBulletType()
+{
+	return bulletType;
+}
 
 // Alter bullet behavior depending on bullet type
 void Bullet::Disrupted()
