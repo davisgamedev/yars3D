@@ -267,7 +267,6 @@ void AppClass::Display(void)
 			m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
 		}
 
-		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->enemyBullet->GetBulletMatrix());
 		enemy->RenderModel(camera->GetProjection(false), camera->GetView());
 
 		if (player->killBullet->GetActiveBullet() == true)
