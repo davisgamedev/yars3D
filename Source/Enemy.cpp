@@ -42,6 +42,12 @@ void Enemy::Move()
 		counter++;
 		counterFire++;
 
+		///// here ya go chris
+		if (counterFire > (fireTiming * .65f))
+		{
+			enemyMatrix = glm::rotate(enemyMatrix, 5.0f, vector3(0.0f, 1.0f, 0.0f));
+		}
+
 		//Decide when to Shoot
 		if (counterFire == fireTiming && firing == false)
 		{
@@ -50,6 +56,8 @@ void Enemy::Move()
 			fireTiming = (rand() % 500 + 200);
 		} 
 	}
+
+	
 }
 
 void Enemy::Shoot()
