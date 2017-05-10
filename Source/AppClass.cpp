@@ -45,7 +45,7 @@ void AppClass::InitVariables(void)
 
 	// enemy bullets
 	enemy->enemyBullet = new Bullet(enemy->GetPosition(), 3, 3);
-	trackingBullet = new Bullet(vector3(6.0f, 0.0f, 2.5f), 3, 2);
+	trackingBullet = new Bullet(enemy->GetPosition(), 3, 2);
 	trackingBullet->SetActiveBullet(true);
 
 	// Audio Stuff
@@ -63,71 +63,137 @@ void AppClass::InitVariables(void)
 	//Will be attached to space bar
 
 	frameCount = 0;
+
+	gameState = 0;
+
+	win = false;
+	dead = false;
 }
 
 void AppClass::Update(void)
 {
-	timer += 1;
-	if (timer > 10)
-	{
-		// change disruptor field colors on a timed basis
-		SwitchColors();
-		timer = 0;
-	}
 
-	//Indicate the FPS
-	int nFPS = m_pSystem->GetFPS();
+	//IF IN BEGIN MODE
+	if (gameState == 0) {
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("                             Yars Revenge 3D", REYELLOW);
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("                               Press Enter!", REWHITE);
 
-	playerPos = player->GetPlayerPosition();
+	} //END BEGIN MODE
 
-	//Print info on the screen
-	m_pMeshMngr->PrintLine("");
-	m_pMeshMngr->PrintLine("Yars Revenge 3D", REYELLOW);
-	//m_pMeshMngr->Print("FPS:");
-	//m_pMeshMngr->Print(std::to_string(nFPS), RERED);
 
-	// Player position, using this to set up player bounderies
-	m_pMeshMngr->Print("PlayerPosition: (");
-	m_pMeshMngr->Print(std::to_string(playerPos.x), RERED);
-	m_pMeshMngr->Print(", ");
-	m_pMeshMngr->Print(std::to_string(playerPos.y), RERED);
-	m_pMeshMngr->Print(", ");
-	m_pMeshMngr->Print(std::to_string(playerPos.z), RERED);
-	m_pMeshMngr->PrintLine(")");
-	m_pMeshMngr->Print("Current Frame: ", REYELLOW);
-	m_pMeshMngr->PrintLine(std::to_string(frameCount), RERED);
+	//IF IN GAME MODE
+	if (gameState == 1) {
 
-	m_pMeshMngr->Print("PlayerDirection: ");
-	m_pMeshMngr->PrintLine(std::to_string(player->GetPlayerDirection()), RERED);
+		timer += 1;
+		if (timer > 10)
+		{
+			// change disruptor field colors on a timed basis
+			SwitchColors();
+			timer = 0;
+		}
 
-	// update the enemy position
-	enemy->Move();
+		//Indicate the FPS
+		int nFPS = m_pSystem->GetFPS();
 
-	// UI elements
-	m_pMeshMngr->PrintLine("Score: ", REYELLOW);
-	m_pMeshMngr->PrintLine("Lives: ", REYELLOW);
-	
-	//Update bullet positions
-	if (player->mainBullet->GetFired() == true)
-	{
-		player->mainBullet->Fire();
-	}
-	if (player->killBullet->GetFired() == true)
-	{
-		player->killBullet->Fire();
-	}
+		playerPos = player->GetPlayerPosition();
 
-	//Enemy Bullet Updates
-	trackingBullet->FireEnemy(player->GetPlayerPosition());
+		//Print info on the screen
+		m_pMeshMngr->PrintLine("");
+		m_pMeshMngr->PrintLine("Yars Revenge 3D", REYELLOW);
+		//m_pMeshMngr->Print("FPS:");
+		//m_pMeshMngr->Print(std::to_string(nFPS), RERED);
 
-	if (enemy->GetLaunch() == true)
-	{
-		enemy->enemyBullet->FireEnemy(player->GetPlayerPosition());
-	}
-	if (enemy->enemyBullet->GetActiveBullet() == false)
-	{
-		enemy->EndLaunch();
-	}
+		// Player position, using this to set up player bounderies
+		m_pMeshMngr->Print("PlayerPosition: (");
+		m_pMeshMngr->Print(std::to_string(playerPos.x), RERED);
+		m_pMeshMngr->Print(", ");
+		m_pMeshMngr->Print(std::to_string(playerPos.y), RERED);
+		m_pMeshMngr->Print(", ");
+		m_pMeshMngr->Print(std::to_string(playerPos.z), RERED);
+		m_pMeshMngr->PrintLine(")");
+		m_pMeshMngr->Print("Current Frame: ", REYELLOW);
+		m_pMeshMngr->PrintLine(std::to_string(frameCount), RERED);
+
+		m_pMeshMngr->Print("PlayerDirection: ");
+		m_pMeshMngr->PrintLine(std::to_string(player->GetPlayerDirection()), RERED);
+
+		// update the enemy position
+		enemy->Move();
+
+		// UI elements
+		m_pMeshMngr->PrintLine("Score: ", REYELLOW);
+		m_pMeshMngr->PrintLine("Lives: ", REYELLOW);
+
+		//Update bullet positions
+		if (player->mainBullet->GetFired() == true)
+		{
+			player->mainBullet->Fire();
+		}
+		if (player->killBullet->GetFired() == true)
+		{
+			player->killBullet->Fire();
+		}
+
+		//Enemy Bullet Updates
+		trackingBullet->FireEnemy(player->GetPlayerPosition());
+
+		if (enemy->GetLaunch() == true)
+		{
+			enemy->enemyBullet->FireEnemy(player->GetPlayerPosition());
+		}
+		if (enemy->enemyBullet->GetActiveBullet() == false)
+		{
+			enemy->EndLaunch();
+		}
+
+		//CHECK FOR END STATE
+		if (dead == true || win == true) {
+			gameState = 2;
+		}
+
+	} //END GAME MODE
+
+
+	  //IF IN END MODE
+	if (gameState == 2) {
+		if (dead == true) {
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("                             Yars Revenge 3D", REYELLOW);
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("                                GAME OVER!", RERED);
+		} else if (win == true) {
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("                             Yars Revenge 3D", REYELLOW);
+			m_pMeshMngr->PrintLine("");
+			m_pMeshMngr->PrintLine("                                 YOU WIN!", REBLUE);
+		}
+	} //END THE END MODE
 }
 
 void AppClass::Display(void)
@@ -137,76 +203,87 @@ void AppClass::Display(void)
 
 	frameCount++;
 	//frameCount %= sizeof(int);
-	
-	// render cubes from field cubes array while modifying placement
-	vector3 currentLocation = vector3(-3.0f, -1.0f, -6.5f);
-	matrix4 disruptorMat = glm::translate(currentLocation);
-	matrix4 disRot = glm::rotate(IDENTITY_M4, 90.0f, vector3(1.0f, 0.0f, 0.0f)); //for rotating the planes
-	for (int i = 0; i < numCubes; i++)
-	{
-		disruptorMat = glm::translate(currentLocation);
 
-		// if modulus 4, else add one in z and go back to -3 x\
-		// if modulus (i+1) [fixes last and first pixel messup] mod (1/sizecubes) [interval of width based on size]
-		if ((i+1) % (4 * (int)(1/sizeCubes)) == 0)
+
+	//IF IN GAME MODE
+	if (gameState == 1) {
+
+		// render cubes from field cubes array while modifying placement
+		vector3 currentLocation = vector3(-3.0f, -1.0f, -6.5f);
+		matrix4 disruptorMat = glm::translate(currentLocation);
+		matrix4 disRot = glm::rotate(IDENTITY_M4, 90.0f, vector3(1.0f, 0.0f, 0.0f)); //for rotating the planes
+		for (int i = 0; i < numCubes; i++)
 		{
-			currentLocation = vector3(-3.0f, -1.0f, currentLocation.z + sizeCubes);
+			disruptorMat = glm::translate(currentLocation);
+
+			// if modulus 4, else add one in z and go back to -3 x\
+			// if modulus (i+1) [fixes last and first pixel messup] mod (1/sizecubes) [interval of width based on size]
+			if ((i + 1) % (4 * (int)(1 / sizeCubes)) == 0)
+			{
+				currentLocation = vector3(-3.0f, -1.0f, currentLocation.z + sizeCubes);
+			}
+			else
+			{
+				currentLocation += vector3(sizeCubes, 0.0f, 0.0f);
+			}
+
+			fieldCubes[i]->Render(camera->GetProjection(false), camera->GetView(), disruptorMat * disRot);
 		}
-		else
+
+		// Get the player Matrix
+		matrix4 playerMatrix = player->GetPlayerMatrix();
+
+		// Renders the meshes using the specified position given by the matrix and in the specified color
+		//m_pPlayer->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
+		player->Render(camera->GetProjection(false), camera->GetView(), playerMatrix, (frameCount / 4) % 2 == 0);
+
+		// render another cube to represent the enemy
+		if (enemy->enemyBullet->GetReturn() == true && enemy->GetFiring() == true)
 		{
-			currentLocation += vector3(sizeCubes, 0.0f, 0.0f);
+			enemy->SetFiring(false);
+			enemy->enemyBullet->SetReturn(false);
 		}
-
-		fieldCubes[i]->Render(camera->GetProjection(false), camera->GetView(), disruptorMat * disRot);
-	}
-
-	// Get the player Matrix
-	matrix4 playerMatrix = player->GetPlayerMatrix();
-
-	// Renders the meshes using the specified position given by the matrix and in the specified color
-	//m_pPlayer->Render(camera->GetProjection(false), camera->GetView(), playerMatrix);
-	player->Render(camera->GetProjection(false), camera->GetView(), playerMatrix, (frameCount/4)%2==0);
-
-	// render another cube to represent the enemy
-	if (enemy->enemyBullet->GetReturn() == true && enemy->GetFiring() == true)
-	{
-		enemy->SetFiring(false);
-		enemy->enemyBullet->SetReturn(false);
-	}
-	if (enemy->GetFiring() == true)
-	{
-		if (enemy->GetLaunch() == false)
+		if (enemy->GetFiring() == true)
 		{
-			EnemyLaunch();
+			if (enemy->GetLaunch() == false)
+			{
+				EnemyLaunch();
+			}
+			m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->enemyBullet->GetBulletMatrix());
 		}
-		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->enemyBullet->GetBulletMatrix());
-	}
-	else if (enemy->GetLaunch() == false)
-	{
-		m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
-	}
-	enemy->RenderModel(camera->GetProjection(false), camera->GetView());
+		else if (enemy->GetLaunch() == false)
+		{
+			m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
+		}
 
-	//Display Bullets
-	if (player->mainBullet->GetActiveBullet() == true)
-	{
-		m_pBullet->Render(camera->GetProjection(false), camera->GetView(), player->mainBullet->GetBulletMatrix());
-	}
+		//Display Bullets
+		if (player->mainBullet->GetActiveBullet() == true)
+		{
+			m_pBullet->Render(camera->GetProjection(false), camera->GetView(), player->mainBullet->GetBulletMatrix());
+		}
 
-	if (player->killBullet->GetActiveBullet() == true)
-	{
-		m_pKillBullet->Render(camera->GetProjection(false), camera->GetView(), player->killBullet->GetBulletMatrix());
-	}
+		else if (enemy->GetLaunch() == false)
+		{
+			m_pEnemy->Render(camera->GetProjection(false), camera->GetView(), enemy->GetMatrix());
+		}
 
-	if (trackingBullet->GetActiveBullet() == true)
-	{
-		m_pTrackingBullet->Render(camera->GetProjection(false), camera->GetView(), trackingBullet->GetBulletMatrix());
-	}
+		enemy->RenderModel(camera->GetProjection(false), camera->GetView());
+
+		if (player->killBullet->GetActiveBullet() == true)
+		{
+			m_pKillBullet->Render(camera->GetProjection(false), camera->GetView(), player->killBullet->GetBulletMatrix());
+		}
+
+		if (trackingBullet->GetActiveBullet() == true)
+		{
+			m_pTrackingBullet->Render(camera->GetProjection(false), camera->GetView(), trackingBullet->GetBulletMatrix());
+		}
+
+		//Render the grid based on the camera's mode:
+		m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
+
+	}//END GAME MODE
 	
-	
-	
-	//Render the grid based on the camera's mode:
-	m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
 	m_pMeshMngr->Render(); //renders the render list
 	m_pMeshMngr->ClearRenderList(); //Reset the Render list after render
 	m_pGLSystem->GLSwapBuffers(); //Swaps the OpenGL buffers
