@@ -6,10 +6,10 @@ Camera* Camera::instance = nullptr;
 Camera::Camera()
 {
 	// give camera a default position - change y value to alter distance from the scene and thus fov
-	pos = vector3(0.0f, 15.0f, 0.0f);
+	pos = vector3(0.0f, 15.0f, 7.5f);
 
 	up = vector3(0.0f, 0.0f, -1.0f);
-	viewMatrix = glm::lookAt(pos, vector3(0.0f, 0.0f, 0.0f), up);
+	viewMatrix = glm::lookAt(pos, vector3(0.0f, 0.0f, 1.0f), up);
 	projectionMatrix = IDENTITY_M4;
 }
 
