@@ -122,7 +122,7 @@ void AppClass::ProcessKeyboard(void)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) == false) // CHANGE GAME STATE
 	{
-		change == false;
+		change = false;
 		
 	}
 #pragma endregion
