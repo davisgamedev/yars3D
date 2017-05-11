@@ -47,7 +47,7 @@ private:
 		{ 0, 0, 0, 0, 1, 1, 1, 1 }
 	};
 	bool barrierVals[BARRIER_H][BARRIER_W];
-	bool* renderVoxels = new bool[NUM_VOXELS];
+	//bool* renderVoxels = new bool[NUM_VOXELS];
 public:
 	static Enemy* GetInstance() {
 		if (instance == nullptr) {

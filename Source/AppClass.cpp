@@ -156,8 +156,9 @@ void AppClass::Update(void)
 			player->DetectCollisions(enemy->enemyBullet);
 			player->DetectCollisions(trackingBullet);
 			enemy->DetectEnemyKillShot(player->killBullet);
-			//enemy->DetectBarrierCollisions(player->killBullet, player);
+			enemy->DetectBarrierCollisions(player->killBullet, player);
 			enemy->DetectBarrierCollisions(player->mainBullet, player);
+			enemy->DetectEnemyCollisions(player);
 			if (player->getPlayerLives() <= 0) {
 				dead = true;
 			}

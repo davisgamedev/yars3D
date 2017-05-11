@@ -84,6 +84,7 @@ void AppClass::ProcessKeyboard(void)
 	// only shoot if player is outside of the disruptor field
 	if (player->getInFieldBool() == false && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && player->mainBullet->GetActiveBullet() == false) // Shoot Bullet
 	{
+		
 		player->Shoot();
 		sound.play();
 	}

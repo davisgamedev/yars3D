@@ -113,51 +113,7 @@ void Player::DetectCollisions(Bullet* bullet)
 		}
 	}
 
-	/*
-	switch (type)
-	{
-	case '0':
-		// player bullet, do nothing
-		break;
-	case '1':
-		std::cout << "kill bullet detection";
-		// collisions with kill bullet (yes player can kill themself with kill bullet)
-		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
-		
-			// colliding
-			std::cout << "kill bullet collision";
-		}
-		else {
-			// not colliding
-		}
-		
-			//				
-			
-		break;
-	case '2': 
-		// collisions with tracking bullet
-		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
-
-			// colliding
-			std::cout << "tracking bullet collision";
-		}
-		else {
-			// not colliding
-		}
-		break;
-	case '3':
-		// collisions with enemy bullet (enemy itself when its launched)
-		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
-
-			// colliding
-			std::cout << "enemy bullet collision";
-		}
-		else {
-			// not colliding
-		}
-		break;
-	}
-	*/
+	
 }
 
 vector3 Player::GetPlayerPosition() { // return player's position
