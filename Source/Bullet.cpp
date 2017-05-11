@@ -377,6 +377,10 @@ float Bullet::GetBulletLength() {
 	return bulletLength;
 }
 
+void Bullet::ResetPosition() {
+	bulletPos = vector3(0.0f, 0.0f, 0.0f);
+}
+
 //Destructor
 Bullet::~Bullet()
 {

@@ -75,7 +75,7 @@ public:
 	void RenderModel(matrix4 projection, matrix4 view);
 	void DetectBarrierCollisions(Bullet* playerBullet, Player* player);
 	void DetectEnemyCollisions(Player* player);
-	void DetectEnemyKillShot(Bullet* bullet);
+	void DetectEnemyKillShot(Bullet* bullet, Player* player);
 	vector3 GetVoxelPosition(int r, int c);
 
 	Enemy();

@@ -50,5 +50,6 @@ public:
 	void SetReturn(bool isReturn); // set method for bReturn state
 	void SetFired(bool isFired); // Set method for fired state
 	float GetBulletLength();
+	void ResetPosition();
 };
 

@@ -21,6 +21,7 @@ Player::Player()
 
 	playerLength = 0.8f;
 	playerLives = 1;
+	playerScore = 0;
 }
 
 
@@ -98,16 +99,15 @@ void Player::DetectCollisions(Bullet* bullet)
 	//std::cout << " bully: " << bulletPos.y;
 	//std::cout << " bullz: " << bulletPos.z;
 	//std::cout << (((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))));
-	
+	if (type == 2 && inField == true) {
+		return;
+	}
 	if (type != 0) {
 
 		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
-
 			// colliding
-			//std::cout << "bullet collision";
 			playerLives--;
-			
-			
+
 		}
 		else {
 			// not colliding
@@ -213,4 +213,12 @@ float Player::getPlayerLength() {
 
 void Player::SetLives() {
 	playerLives--;
+}
+
+int Player::GetPlayerScore() {
+	return playerScore;
+}
+
+void Player::SetPlayerScore(int addScore) {
+	playerScore += addScore;
 }

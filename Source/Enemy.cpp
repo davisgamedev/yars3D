@@ -133,10 +133,13 @@ void Enemy::DetectBarrierCollisions(Bullet* playerBullet, Player* player)
 					}
 					if ((((playerPos.x - (playerLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (playerPos.x - (playerLength / 2) < voxelPos.x + (SIZE_VOXELS / 2))) || ((playerPos.x + (playerLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (playerPos.x + (playerLength / 2) < voxelPos.x + (SIZE_VOXELS / 2)))) && (((playerPos.z - (playerLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (playerPos.z - (playerLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))) || ((playerPos.z + (playerLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (playerPos.z + (playerLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))))) {
 						barrierVals[i][j] = 0;
-						
+						player->SetPlayerScore(10);
 					}
 					else if((((bulletPos.x - (bulletLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (bulletPos.x - (bulletLength / 2) < voxelPos.x + (SIZE_VOXELS / 2))) || ((bulletPos.x + (bulletLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (bulletPos.x + (bulletLength / 2) < voxelPos.x + (SIZE_VOXELS / 2)))) && (((bulletPos.z - (bulletLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (bulletPos.z - (bulletLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))) || ((bulletPos.z + (bulletLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (bulletPos.z + (bulletLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))))){
 						barrierVals[i][j] = 0;
+						playerBullet->SetFired(false);
+						playerBullet->SetActiveBullet(false);
+						playerBullet->ResetPosition();
 						//player->killBullet->SetFired(false);
 						//player->killBullet->SetActiveBullet(false);
 					}
@@ -157,25 +160,36 @@ void Enemy::DetectEnemyCollisions(Player* player)
 {
 	vector3 playerPos = player->GetPlayerPosition();
 	float playerLength = player->getPlayerLength();
-	
-	
-	if (launched == true && (((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
-		// colliding
-		
-		player->SetLives();
-	}
-	else if (launched == false && (((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
+	/*
+	if ((((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
 		player->killBullet = new Bullet(playerPos, 1, 1);
 		player->killBullet->SetActiveBullet(true);
+		player->SetLives();
 	}
 	else {
 		// do nothing
 	}
-	// detect if player position x and z are overlapping enemy // aabb
+	*/
+	
+	if (launched == false && (((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
+		// colliding
+		player->killBullet = new Bullet(playerPos, 1, 1);
+		player->killBullet->SetActiveBullet(true);
+		
+	}
+	else if (launched == true && (((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
+		
+		player->SetLives();
+	}
+	else {
+		// do nothing
+	}
+	
+
 	
 }
 
-void Enemy::DetectEnemyKillShot(Bullet* bullet)
+void Enemy::DetectEnemyKillShot(Bullet* bullet, Player* player)
 {
 	int type = bullet->GetBulletType();
 	vector3 bulletPos = bullet->GetBulletPos();
@@ -186,6 +200,7 @@ void Enemy::DetectEnemyKillShot(Bullet* bullet)
 	{
 		if ((((bulletPos.x - (bulletLength / 2) > enemyPos.x - (enemyLength / 2)) && (bulletPos.x - (bulletLength / 2) < enemyPos.x + (enemyLength / 2))) || ((bulletPos.x + (bulletLength / 2) > enemyPos.x - (enemyLength / 2)) && (bulletPos.x + (bulletLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((bulletPos.z - (bulletLength / 2) > enemyPos.z - (enemyLength / 2)) && (bulletPos.z - (bulletLength / 2) < enemyPos.z + (enemyLength / 2))) || ((bulletPos.z + (bulletLength / 2) > enemyPos.z - (enemyLength / 2)) && (bulletPos.z + (bulletLength / 2) < enemyPos.z + (enemyLength / 2))))) {
 			// colliding
+			player->SetPlayerScore(1000);
 			enemyLives = 0;
 		}
 		else {
