@@ -19,22 +19,26 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 	horizontalBoundaryRight = 9.15f; // set max/min horizontal boudnary (x axis)
 
 	switch (bulletType) {
-	case 0:
+	case 0: // PLayer
 		// Assign bullet details
 		bulletM4 = glm::translate(bulletPos);
+		bulletLength = 0.2f;
 		break;
-	case 1:
+	case 1: // Kill
 		// Assign bullet details
 		bulletPos.x = -9.35f;
 		bulletM4 = glm::translate(-9.35f, 0.0f,bulletPos.z);
+		bulletLength = 0.4f;
 		break;
-	case 2:
+	case 2: // Tracking
 		// Assign bullet details
 		bulletM4 = glm::translate(bulletPos);
+		bulletLength = 0.3f;
 		break;
-	case 3:
+	case 3: // Enemy
 		// Assign bullet details
 		bulletM4 = glm::translate(bulletPos);
+		bulletLength = 0.7f;
 		spin = 0;
 		break;
 	default:
@@ -367,6 +371,10 @@ bool Bullet::GetFired()
 void Bullet::SetFired(bool isFired)
 {
 	fired = isFired;
+}
+
+float Bullet::GetBulletLength() {
+	return bulletLength;
 }
 
 //Destructor

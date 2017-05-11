@@ -27,6 +27,8 @@ private:
 	float horizontalBoundaryLeft;
 	float horizontalBoundaryRight;
 
+	float bulletLength;
+
 public:
 	Bullet(vector3 userPos, int userDir, int type);
 	~Bullet();
@@ -47,5 +49,6 @@ public:
 	bool GetReturn(); // Get method for bReturn state
 	void SetReturn(bool isReturn); // set method for bReturn state
 	void SetFired(bool isFired); // Set method for fired state
+	float GetBulletLength();
 };
 

@@ -21,6 +21,7 @@ private:
 	
 	static Enemy* instance;
 
+	float enemyLength;
 
 	PrimitiveClass* voxelList = nullptr;
 	const int NUM_VOXELS = 64;

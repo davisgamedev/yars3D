@@ -15,7 +15,7 @@ Enemy::Enemy()
 	firing = false;
 	fireTiming = (rand() % 500 + 200);
 	spin = 0;
-
+	enemyLength = 0.7f;
 	Reset();
 }
 
@@ -112,7 +112,15 @@ void Enemy::DetectBarrierCollisions(Bullet* playerBullet, Player* player)
 void Enemy::DetectEnemyCollisions(Player* player)
 {
 	vector3 playerPos = player->GetPlayerPosition();
+	float playerLength = player->getPlayerLength();
+	
 
+	if ((((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
+		// colliding
+	}
+	else {
+		// do nothing
+	}
 	// detect if player position x and z are overlapping enemy // aabb
 	
 }
@@ -121,11 +129,17 @@ void Enemy::DetectEnemyKillShot(Bullet* bullet)
 {
 	int type = bullet->GetBulletType();
 	vector3 bulletPos = bullet->GetBulletPos();
+	float bulletLength = bullet->GetBulletLength();
 
 	// if bullet type is kill bullet, detect collisions with enemy
 	if (type == 1)
 	{
-		// do stuffz
+		if ((((bulletPos.x - (bulletLength / 2) > enemyPos.x - (enemyLength / 2)) && (bulletPos.x - (bulletLength / 2) < enemyPos.x + (enemyLength / 2))) || ((bulletPos.x + (bulletLength / 2) > enemyPos.x - (enemyLength / 2)) && (bulletPos.x + (bulletLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((bulletPos.z - (bulletLength / 2) > enemyPos.z - (enemyLength / 2)) && (bulletPos.z - (bulletLength / 2) < enemyPos.z + (enemyLength / 2))) || ((bulletPos.z + (bulletLength / 2) > enemyPos.z - (enemyLength / 2)) && (bulletPos.z + (bulletLength / 2) < enemyPos.z + (enemyLength / 2))))) {
+			// colliding
+		}
+		else {
+			// do nothing
+		}
 	}
 }
 

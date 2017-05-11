@@ -26,6 +26,9 @@ private:
 	float horizontalBoundaryLeft;
 	float horizontalBoundaryRight;
 
+	float playerLength;
+	int playerLives;
+
 	//voxels
 	//handle array allocation in Generate
 	//handle deletion in class deconstructor
@@ -132,6 +135,8 @@ public:
 	void setInFieldBool(bool inFld);
 	bool getInFieldBool();
 	bool Moving = false;
+	int getPlayerLives();
+	float getPlayerLength();
 };
 
 

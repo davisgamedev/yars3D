@@ -124,8 +124,8 @@ void AppClass::Update(void)
 		m_pMeshMngr->Print("Current Frame: ", REYELLOW);
 		m_pMeshMngr->PrintLine(std::to_string(frameCount), RERED);
 
-		m_pMeshMngr->Print("PlayerDirection: ");
-		m_pMeshMngr->PrintLine(std::to_string(player->GetPlayerDirection()), RERED);
+		m_pMeshMngr->Print("Lives: ");
+		m_pMeshMngr->PrintLine(std::to_string(player->getPlayerLives()), RERED);
 
 		// update the enemy position
 		enemy->Move();
@@ -143,6 +143,17 @@ void AppClass::Update(void)
 		{
 			player->killBullet->Fire();
 		}
+
+
+
+		// Check for bullet collisions
+			player->DetectCollisions(player->killBullet);
+			player->DetectCollisions(enemy->enemyBullet);
+			player->DetectCollisions(trackingBullet);
+			if (player->getPlayerLives() <= 0) {
+				dead = true;
+			}
+		
 
 		//Enemy Bullet Updates
 		trackingBullet->FireEnemy(player->GetPlayerPosition());
