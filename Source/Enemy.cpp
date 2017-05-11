@@ -116,10 +116,14 @@ void Enemy::DetectBarrierCollisions(Bullet* playerBullet, Player* player)
 
 	// only check collisions between barrier and bullet types of 0 and 1
 	if (type == 0 || type == 1) {
-		//std::cout << "voxelCOl";
+
 		for (int i = 0; i < NUM_VOXELS; i++) {
 
+			if (barrierVals[i] == 0) {
+				continue;
+			}
 			std::vector<vector3> vertexList = voxelList[i].GetVertexList();
+
 			float minX = vertexList[0].x;
 			float minZ = vertexList[0].x;
 			float maxX = vertexList[0].z;
@@ -136,7 +140,7 @@ void Enemy::DetectBarrierCollisions(Bullet* playerBullet, Player* player)
 					minZ = vertexList[j].z;
 				}
 			}
-
+			
 			if ((((bulletPos.x - (bulletLength / 2) > minX) && (bulletPos.x - (bulletLength / 2) < maxX)) || ((bulletPos.x + (bulletLength / 2) > minX) && (bulletPos.x + (bulletLength / 2) < maxX))) && (((bulletPos.z - (bulletLength / 2) > minZ) && (bulletPos.z - (bulletLength / 2) < maxZ)) || ((bulletPos.z + (bulletLength / 2) > minZ) && (bulletPos.z + (bulletLength / 2) < maxZ)))) {
 				renderVoxels[i] = false;
 			}
