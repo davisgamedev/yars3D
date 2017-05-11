@@ -187,9 +187,10 @@ void Enemy::DetectEnemyKillShot(Bullet* bullet)
 	int type = bullet->GetBulletType();
 	vector3 bulletPos = bullet->GetBulletPos();
 	float bulletLength = bullet->GetBulletLength();
+	bool active = bullet->GetActiveBullet();
 
 	// if bullet type is kill bullet, detect collisions with enemy
-	if (type == 1)
+	if (type == 1 && active == true && launched == false)
 	{
 		if ((((bulletPos.x - (bulletLength / 2) > enemyPos.x - (enemyLength / 2)) && (bulletPos.x - (bulletLength / 2) < enemyPos.x + (enemyLength / 2))) || ((bulletPos.x + (bulletLength / 2) > enemyPos.x - (enemyLength / 2)) && (bulletPos.x + (bulletLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((bulletPos.z - (bulletLength / 2) > enemyPos.z - (enemyLength / 2)) && (bulletPos.z - (bulletLength / 2) < enemyPos.z + (enemyLength / 2))) || ((bulletPos.z + (bulletLength / 2) > enemyPos.z - (enemyLength / 2)) && (bulletPos.z + (bulletLength / 2) < enemyPos.z + (enemyLength / 2))))) {
 			// colliding

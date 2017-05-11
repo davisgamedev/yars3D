@@ -116,7 +116,7 @@ void Bullet::Fire()
 		bulletPos += movement;
 		bulletM4 = glm::translate(bulletM4, movement);
 
-		if (bulletPos.z > 6.0f || bulletPos.z < -6.5f || bulletPos.x > 10.0f || bulletPos.x < -10.0f)
+		if (bulletPos.z > 6.0f || bulletPos.z < -5.3f || bulletPos.x > 9.3f || bulletPos.x < -9.5f)
 		{
 			active = false;
 			fired = false;
@@ -144,7 +144,7 @@ void Bullet::Fire()
 		bulletPos += movement;
 		bulletM4 = glm::translate(bulletM4, movement);
 
-		if (bulletPos.x > 10.0f)
+		if (bulletPos.x > 9.3f)
 		{
 			active = false;
 			fired = false;
@@ -221,7 +221,7 @@ void Bullet::FireEnemy(vector3 playerPos)
 		// Movement of bullet type 3
 		bulletM4 = glm::rotate(bulletM4, -spin, vector3(0.0f, 1.0f, 0.0f));
 
-		if (bulletPos.z > 7.0f || bulletPos.z < -7.5f || bulletPos.x > 12.0f || bulletPos.x < -12.0f)
+		if (bulletPos.z > 6.0f || bulletPos.z < -5.5f || bulletPos.x > 9.5f || bulletPos.x < -9.5f)
 		{
 			active = false;
 			fired = false;

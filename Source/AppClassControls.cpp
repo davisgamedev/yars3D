@@ -21,78 +21,82 @@ void AppClass::ProcessKeyboard(void)
 		//bModifier = true;
 #pragma endregion
 
+	if (gameState == 1) {
+
 #pragma region Camera Positioning
-	if(bModifier)
-		fSpeed *= 10.0f;
-	
-	// Camera Movements
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::I))
-		m_pCameraMngr->MoveForward(fSpeed);
+		if (bModifier)
+			fSpeed *= 10.0f;
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::K))
-		m_pCameraMngr->MoveForward(-fSpeed);
-	
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::J))
-		m_pCameraMngr->MoveSideways(-fSpeed);
+		// Camera Movements
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))
+			m_pCameraMngr->MoveForward(fSpeed);
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::L))
-		m_pCameraMngr->MoveSideways(fSpeed);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+			m_pCameraMngr->MoveForward(-fSpeed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
-		m_pCameraMngr->MoveVertical(-fSpeed);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+			m_pCameraMngr->MoveSideways(-fSpeed);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
-		m_pCameraMngr->MoveVertical(fSpeed);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+			m_pCameraMngr->MoveSideways(fSpeed);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::U))
+			m_pCameraMngr->MoveVertical(-fSpeed);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::O))
+			m_pCameraMngr->MoveVertical(fSpeed);
 
 
 
-	// Player movement
-	// else statements so player can only move in one direction at a time (no diagonal)
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // Move up
-	{
-		
-		player->SetPlayerDirection(1); //Set direction
-		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
+		// Player movement
+		// else statements so player can only move in one direction at a time (no diagonal)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // Move up
 		{
-			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 7)), player->GetPlayerPosition());
+
+			player->SetPlayerDirection(1); //Set direction
+			if (player->killBullet->GetFired() == false) //Have kill bullet follow player
+			{
+				player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (-fSpeed * 7)), player->GetPlayerPosition());
+			}
+
+			player->MoveVertical(-fSpeed * 7); // slower than horizontal speed
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // Move down
+		{
+			player->SetPlayerDirection(3); //Set direction
+			if (player->killBullet->GetFired() == false) //Have kill bullet follow player
+			{
+				player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 7)), player->GetPlayerPosition());
+			}
+
+			player->MoveVertical(fSpeed * 7);  // slower than horizontal speed
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // Move left
+		{
+			player->SetPlayerDirection(2); //Set direction
+			player->MoveHorizontal(-fSpeed * 10);
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Move right
+		{
+			player->SetPlayerDirection(0); //Set direction
+			player->MoveHorizontal(fSpeed * 10);
 		}
 
-		player->MoveVertical(-fSpeed * 7); // slower than horizontal speed
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // Move down
-	{
-		player->SetPlayerDirection(3); //Set direction
-		if (player->killBullet->GetFired() == false) //Have kill bullet follow player
+		// Player Attack
+		// only shoot if player is outside of the disruptor field
+		if (player->getInFieldBool() == false && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && player->mainBullet->GetActiveBullet() == false) // Shoot Bullet
 		{
-			player->killBullet->ChangePosition(vector3(0.0f, 0.0f, (fSpeed * 7)), player->GetPlayerPosition());
+			player->Shoot();
+			sound.play();
 		}
 
-		player->MoveVertical(fSpeed * 7);  // slower than horizontal speed
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // Move left
-	{
-		player->SetPlayerDirection(2); //Set direction
-		player->MoveHorizontal(-fSpeed * 10);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // Move right
-	{
-		player->SetPlayerDirection(0); //Set direction
-		player->MoveHorizontal(fSpeed * 10);
-	}
+		//TEST KILL BULLET USING T -- Will be triggered by touching enemy core
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::T)) && player->killBullet->GetActiveBullet() == false) // Activate Kill Bullet
+		{
+			player->killBullet = new Bullet(playerPos, 1, 1);
+			player->killBullet->SetActiveBullet(true);
+		}
 
-	// Player Attack
-	// only shoot if player is outside of the disruptor field
-	if (player->getInFieldBool() == false && (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && player->mainBullet->GetActiveBullet() == false) // Shoot Bullet
-	{
-		player->Shoot();
-		sound.play();
-	}
-
-	//TEST KILL BULLET USING T -- Will be triggered by touching enemy core
-	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::T)) && player->killBullet->GetActiveBullet() == false) // Activate Kill Bullet
-	{
-		player->killBullet = new Bullet(playerPos, 1, 1);
-		player->killBullet->SetActiveBullet(true);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) // TESTING STUFF
@@ -103,8 +107,9 @@ void AppClass::ProcessKeyboard(void)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) // CHANGE GAME STATE
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && change == false) // CHANGE GAME STATE
 	{
+		change == true;
 		if (gameState == 0) {
 			gameState = 1;
 		}
@@ -114,6 +119,11 @@ void AppClass::ProcessKeyboard(void)
 			dead = false;
 			//gameState = 1;
 		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) == false) // CHANGE GAME STATE
+	{
+		change == false;
+		
 	}
 #pragma endregion
 

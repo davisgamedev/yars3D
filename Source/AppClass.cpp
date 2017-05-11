@@ -367,6 +367,7 @@ void AppClass::EnemyLaunch()
 
 void AppClass::Reset() 
 {
+
 	m_pEnemy = new PrimitiveClass();
 
 	m_pBullet = new PrimitiveClass();
@@ -413,7 +414,7 @@ void AppClass::Reset()
 	sRoute += m_pSystem->m_pFolder->GetFolderAudio();
 
 	//Background music
-	soundBGM.openFromFile(sRoute + "elementary-wave-11.ogg");
+	soundBGM.openFromFile(sRoute + "music1.wav");
 	soundBGM.play();
 	soundBGM.setLoop(true);
 

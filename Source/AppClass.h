@@ -30,6 +30,7 @@ class AppClass : public ReEngAppClass
 	int gameState = 0;
 	bool dead = false;
 	bool win = false;
+	bool change = false;
 
 	//Enum for game states
 	enum STATE {BEGIN = 0, GAME = 1, END = 2};
