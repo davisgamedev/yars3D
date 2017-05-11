@@ -18,7 +18,8 @@ private:
 	bool launched; // when the enemy actually shoots itself
 	int fireTiming; // when to fire itself
 	float spin; // angle of rotation before launching
-	
+	int enemyLives;
+
 	static Enemy* instance;
 
 	float enemyLength;
@@ -46,7 +47,7 @@ private:
 		{ 0, 0, 0, 0, 1, 1, 1, 1 }
 	};
 	bool barrierVals[BARRIER_H][BARRIER_W];
-
+	bool* renderVoxels = new bool[NUM_VOXELS];
 public:
 	static Enemy* GetInstance() {
 		if (instance == nullptr) {
@@ -83,5 +84,7 @@ public:
 	void Move();
 
 	matrix4 GetMatrix();
+
+	int getEnemyLives();
 };
 
