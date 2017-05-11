@@ -181,7 +181,7 @@ void AppClass::Update(void)
 
 		//CHECK FOR END STATE
 		if (dead == true || win == true) {
-			//gameState = 2;
+			gameState = 2;
 		}
 
 	} //END GAME MODE
