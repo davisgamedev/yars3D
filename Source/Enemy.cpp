@@ -105,6 +105,12 @@ void Enemy::Move()
 	
 }
 
+vector3 Enemy::GetVoxelPosition(int r, int c) {
+	float x = (enemyPos.x - BARRIER_COMP.x) + (r * SIZE_VOXELS);
+	float z = (enemyPos.z - BARRIER_COMP.z) + (c * SIZE_VOXELS);
+	return vector3(x, 0.0f, z);
+}
+
 void Enemy::DetectBarrierCollisions(Bullet* playerBullet, Player* player)
 {
 	// get locations of the bullet to check and player to check

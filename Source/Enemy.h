@@ -76,6 +76,7 @@ public:
 	void DetectBarrierCollisions(Bullet* playerBullet, Player* player);
 	void DetectEnemyCollisions(Player* player);
 	void DetectEnemyKillShot(Bullet* bullet);
+	vector3 GetVoxelPosition(int r, int c);
 
 	Enemy();
 	~Enemy();
