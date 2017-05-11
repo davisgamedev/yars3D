@@ -106,8 +106,10 @@ void Enemy::Move()
 }
 
 vector3 Enemy::GetVoxelPosition(int r, int c) {
-	float x = (enemyPos.x - BARRIER_COMP.x) + (r * SIZE_VOXELS);
-	float z = (enemyPos.z - BARRIER_COMP.z) + (c * SIZE_VOXELS);
+	
+	float x = (enemyPos.x - BARRIER_COMP.x) + (c * SIZE_VOXELS);
+	float z = (enemyPos.z - BARRIER_COMP.z) + (r * SIZE_VOXELS);
+	
 	return vector3(x, 0.0f, z);
 }
 
@@ -126,15 +128,15 @@ void Enemy::DetectBarrierCollisions(Bullet* playerBullet, Player* player)
 		for (int i = 0; i < BARRIER_H; i++) {
 			for (int j = 0; j < BARRIER_W; j++) {
 				vector3 voxelPos = GetVoxelPosition(i, j);
-					if (barrierVals[j][i] == 0) {
+					if (barrierVals[i][j] == 0) {
 						continue;
 					}
 					if ((((playerPos.x - (playerLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (playerPos.x - (playerLength / 2) < voxelPos.x + (SIZE_VOXELS / 2))) || ((playerPos.x + (playerLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (playerPos.x + (playerLength / 2) < voxelPos.x + (SIZE_VOXELS / 2)))) && (((playerPos.z - (playerLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (playerPos.z - (playerLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))) || ((playerPos.z + (playerLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (playerPos.z + (playerLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))))) {
-						barrierVals[j][i] = 0;
+						barrierVals[i][j] = 0;
 						
 					}
 					else if((((bulletPos.x - (bulletLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (bulletPos.x - (bulletLength / 2) < voxelPos.x + (SIZE_VOXELS / 2))) || ((bulletPos.x + (bulletLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (bulletPos.x + (bulletLength / 2) < voxelPos.x + (SIZE_VOXELS / 2)))) && (((bulletPos.z - (bulletLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (bulletPos.z - (bulletLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))) || ((bulletPos.z + (bulletLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (bulletPos.z + (bulletLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))))){
-						barrierVals[j][i] = 0;
+						barrierVals[i][j] = 0;
 						//player->killBullet->SetFired(false);
 						//player->killBullet->SetActiveBullet(false);
 					}
