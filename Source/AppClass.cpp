@@ -16,15 +16,20 @@ void AppClass::InitVariables(void)
 	m_pBullet = new PrimitiveClass();
 	m_pKillBullet = new PrimitiveClass();
 	m_pTrackingBullet = new PrimitiveClass();
-
+	m_pPlayerBoundaries = new PrimitiveClass();
 
 	//Initializing the primitives
 	//m_pPlayer->GenerateCube(0.5, REWHITE);
-	m_pEnemy->GenerateCube(0.7, REYELLOW);
+	m_pEnemy->GenerateCube(0.7f, REYELLOW);
 
-	m_pBullet->GenerateCube(0.2, REBLUE);
-	m_pKillBullet->GenerateCube(0.4, REGREEN);
-	m_pTrackingBullet->GenerateCube(0.3, RERED);
+	m_pBullet->GenerateCube(0.2f, REBLUE);
+	m_pKillBullet->GenerateCube(0.4f, REGREEN);
+	m_pTrackingBullet->GenerateCube(0.3f, RERED);
+	m_pPlayerBoundaries->GeneratePlane(1.0f, REBLACK);
+
+	m_mPlayerBoundaries = glm::translate(IDENTITY_M4, vector3(-0.125f, -2.0f, -0.6f)) *
+		glm::scale(IDENTITY_M4, vector3(21.75f, 1.0f, 13.0f)) *
+		glm::rotate(IDENTITY_M4, 90.0f, vector3(1.0f, 0.0f, 0.0f));
 
 	// Define player object
 	player = Player::GetInstance();
@@ -209,7 +214,7 @@ void AppClass::Display(void)
 	if (gameState == 1) {
 
 		// render cubes from field cubes array while modifying placement
-		vector3 currentLocation = vector3(-3.0f, -1.0f, -6.5f);
+		vector3 currentLocation = vector3(-3.0f, -1.0f, -7.5f);
 		matrix4 disruptorMat = glm::translate(currentLocation);
 		matrix4 disRot = glm::rotate(IDENTITY_M4, 90.0f, vector3(1.0f, 0.0f, 0.0f)); //for rotating the planes
 		for (int i = 0; i < numCubes; i++)
@@ -281,7 +286,7 @@ void AppClass::Display(void)
 
 		//Render the grid based on the camera's mode:
 		m_pMeshMngr->AddGridToRenderListBasedOnCamera(m_pCameraMngr->GetCameraMode());
-
+		m_pPlayerBoundaries->Render(camera->GetProjection(false), camera->GetView(), m_mPlayerBoundaries);
 	}//END GAME MODE
 	
 	m_pMeshMngr->Render(); //renders the render list
@@ -351,7 +356,9 @@ void AppClass::Release(void)
 	SafeDelete(m_pKillBullet);
 	SafeDelete(m_pTrackingBullet);
 	SafeDelete(trackingBullet);
-	SafeDelete(fieldCubes);
+	SafeDelete(m_pPlayerBoundaries);
+	delete[] fieldCubes;
+	fieldCubes = nullptr;
 
 	player->ReleaseInstance();
 	player = nullptr;

@@ -22,7 +22,9 @@ class AppClass : public ReEngAppClass
 	PrimitiveClass* m_pBullet = nullptr;
 	PrimitiveClass* m_pKillBullet = nullptr;
 	PrimitiveClass* m_pTrackingBullet = nullptr;
+	PrimitiveClass* m_pPlayerBoundaries = nullptr;
 	matrix4 m_m4Cube;
+	matrix4 m_mPlayerBoundaries;
 
 	//GAME STATE VARIABLES
 	int gameState = 0;
@@ -34,7 +36,7 @@ class AppClass : public ReEngAppClass
 
 	// array of pointers to primitives for disruptor field
 	PrimitiveClass** fieldCubes;
-	const int numCubes = 216;
+	const int numCubes = 240;
 	const float sizeCubes = 0.5f;
 
 	// Player object

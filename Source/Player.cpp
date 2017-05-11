@@ -69,8 +69,6 @@ void Player::MoveHorizontal(float fIncrement) {
 	if (playerPos.x > horizontalBoundaryRight) { // Right Boundary
 		playerPos.x = horizontalBoundaryRight;
 		playerMat = glm::translate(IDENTITY_M4, playerPos);
-
-		
 	}
 	else if (playerPos.x < -horizontalBoundaryLeft) { // Left Boundary
 		playerPos.x = -horizontalBoundaryLeft;
@@ -176,9 +174,8 @@ void Player::GenerateModel(vector3 color) {
 		for (int i = 0; i < NUM_VOXELS; i++) {
 			voxelList[i] = *(new PrimitiveClass());
 			voxelList[i].GenerateCube(SIZE_VOXELS, color);
-			
-			
 		}
+
 	}
 }
 
