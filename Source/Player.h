@@ -137,6 +137,7 @@ public:
 	bool Moving = false;
 	int getPlayerLives();
 	float getPlayerLength();
+	void SetLives();
 };
 
 

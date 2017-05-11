@@ -153,8 +153,8 @@ void AppClass::Update(void)
 
 		// Check for bullet collisions
 			player->DetectCollisions(player->killBullet);
-			player->DetectCollisions(enemy->enemyBullet);
-			player->DetectCollisions(trackingBullet);
+			//player->DetectCollisions(enemy->enemyBullet);
+			//player->DetectCollisions(trackingBullet);
 			enemy->DetectEnemyKillShot(player->killBullet);
 			enemy->DetectBarrierCollisions(player->killBullet, player);
 			enemy->DetectBarrierCollisions(player->mainBullet, player);
