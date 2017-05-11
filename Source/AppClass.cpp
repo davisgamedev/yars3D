@@ -365,6 +365,71 @@ void AppClass::EnemyLaunch()
 	enemy->Shoot();
 }
 
+void AppClass::Reset() 
+{
+	m_pEnemy = new PrimitiveClass();
+
+	m_pBullet = new PrimitiveClass();
+	m_pKillBullet = new PrimitiveClass();
+	m_pTrackingBullet = new PrimitiveClass();
+	m_pPlayerBoundaries = new PrimitiveClass();
+
+	//Initializing the primitives
+	m_pEnemy->GenerateCube(0.7f, REYELLOW);
+
+	m_pBullet->GenerateCube(0.2f, REBLUE);
+	m_pKillBullet->GenerateCube(0.4f, REGREEN);
+	m_pTrackingBullet->GenerateCube(0.3f, RERED);
+	m_pPlayerBoundaries->GeneratePlane(1.0f, REBLACK);
+
+	m_mPlayerBoundaries = glm::translate(IDENTITY_M4, vector3(-0.125f, -2.0f, -0.6f)) *
+		glm::scale(IDENTITY_M4, vector3(21.75f, 1.0f, 13.0f)) *
+		glm::rotate(IDENTITY_M4, 90.0f, vector3(1.0f, 0.0f, 0.0f));
+
+	// Define player object
+	player->Player::ReleaseInstance();
+	player->Player::GetInstance();
+	player->GenerateModel(REWHITE);
+	playerPos = vector3(0.0f, 0.0f, 0.0f);
+
+	// define enemy object
+	enemy->Enemy::ReleaseInstance();
+	enemy->Enemy::GetInstance();
+
+
+	// add disruptor array reference
+	//fieldCubes = new PrimitiveClass*[72];
+	fieldCubes = new PrimitiveClass*[numCubes];
+	// then do cube creation here
+	fieldCubes = GenerateDisruptorField();
+
+	// enemy bullets
+	enemy->enemyBullet = new Bullet(enemy->GetPosition(), 3, 3);
+	trackingBullet = new Bullet(enemy->GetPosition(), 3, 2);
+	trackingBullet->SetActiveBullet(true);
+
+	// Audio Stuff
+	String sRoute = m_pSystem->m_pFolder->GetFolderData();
+	sRoute += m_pSystem->m_pFolder->GetFolderAudio();
+
+	//Background music
+	soundBGM.openFromFile(sRoute + "elementary-wave-11.ogg");
+	soundBGM.play();
+	soundBGM.setLoop(true);
+
+	//sound effect
+	soundBuffer.loadFromFile(sRoute + "SpaceGun04.wav");
+	sound.setBuffer(soundBuffer);
+	//Will be attached to space bar
+
+	frameCount = 0;
+
+	gameState = 0;
+
+	win = false;
+	dead = false;
+}
+
 void AppClass::Release(void)
 {
 	//SafeDelete(m_pPlayer);

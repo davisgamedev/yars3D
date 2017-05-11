@@ -64,6 +64,7 @@ public:
 	PrimitiveClass** GenerateDisruptorField();
 	void SwitchColors();
 	void EnemyLaunch();
+	void Reset();
 	typedef ReEngAppClass super;
 	/*
 	USAGE: Constructor
