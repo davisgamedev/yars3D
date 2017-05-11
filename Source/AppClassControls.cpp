@@ -110,9 +110,10 @@ void AppClass::ProcessKeyboard(void)
 			gameState = 1;
 		}
 		else if (gameState == 2) {
+			Reset();
 			win = false;
 			dead = false;
-			gameState = 1;
+			//gameState = 1;
 		}
 	}
 #pragma endregion
