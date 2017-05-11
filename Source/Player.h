@@ -28,6 +28,7 @@ private:
 
 	float playerLength;
 	int playerLives;
+	int playerScore;
 
 	//voxels
 	//handle array allocation in Generate
@@ -137,6 +138,9 @@ public:
 	bool Moving = false;
 	int getPlayerLives();
 	float getPlayerLength();
+	void SetLives();
+	int GetPlayerScore();
+	void SetPlayerScore(int addScore);
 };
 
 

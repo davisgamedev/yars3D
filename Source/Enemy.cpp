@@ -26,7 +26,7 @@ void Enemy::GenerateModel(vector3 color) {
 		for (int i = 0; i < NUM_VOXELS; i++) {
 			voxelList[i] = *(new PrimitiveClass());
 			voxelList[i].GenerateCube(SIZE_VOXELS, color);
-			renderVoxels[i] = true;
+			//renderVoxels[i] = true;
 		}
 	}
 }
@@ -36,14 +36,14 @@ void Enemy::RenderModel(matrix4 projection, matrix4 view) {
 	for (int h = 0; h < BARRIER_H; h++) {
 		for (int w = 0; w < BARRIER_W; w++) {
 			if (!barrierVals[h][w]) continue;
-			if (renderVoxels[i] == true) {
+			//if (renderVoxels[i] == true) {
 				vector3 voxelPos = vector3(w * SIZE_VOXELS, 0.0f, h * SIZE_VOXELS);
 				matrix4 localMat = glm::translate(IDENTITY_M4, (enemyPos - BARRIER_COMP) + voxelPos);
 				voxelList[i++].Render(projection, view, localMat);
-			}
-			else {
+			//}
+			//else {
 
-			}
+			//}
 			
 		}
 	}
@@ -106,8 +106,10 @@ void Enemy::Move()
 }
 
 vector3 Enemy::GetVoxelPosition(int r, int c) {
-	float x = (enemyPos.x - BARRIER_COMP.x) + (r * SIZE_VOXELS);
-	float z = (enemyPos.z - BARRIER_COMP.z) + (c * SIZE_VOXELS);
+	
+	float x = (enemyPos.x - BARRIER_COMP.x) + (c * SIZE_VOXELS);
+	float z = (enemyPos.z - BARRIER_COMP.z) + (r * SIZE_VOXELS);
+	
 	return vector3(x, 0.0f, z);
 }
 
@@ -123,42 +125,30 @@ void Enemy::DetectBarrierCollisions(Bullet* playerBullet, Player* player)
 	// only check collisions between barrier and bullet types of 0 and 1
 	if (type == 0 || type == 1) {
 
-		for (int i = 0; i < NUM_VOXELS; i++) {
-
-			if (barrierVals[i] == 0) {
-				continue;
-			}
-			std::vector<vector3> vertexList = voxelList[i].GetVertexList();
-
-			float minX = vertexList[0].x;
-			float minZ = vertexList[0].x;
-			float maxX = vertexList[0].z;
-			float maxZ = vertexList[0].z;
-
-			for (int j = 1; j < vertexList.size(); j++) {
-				if (minX > vertexList[j].x) {
-					minX = vertexList[j].x;
-				}
-				if (maxX < vertexList[j].x) {
-					maxX = vertexList[j].x;
-				}
-				if (minZ > vertexList[j].z) {
-					minZ = vertexList[j].z;
-				}
-			}
-			
-			if ((((bulletPos.x - (bulletLength / 2) > minX) && (bulletPos.x - (bulletLength / 2) < maxX)) || ((bulletPos.x + (bulletLength / 2) > minX) && (bulletPos.x + (bulletLength / 2) < maxX))) && (((bulletPos.z - (bulletLength / 2) > minZ) && (bulletPos.z - (bulletLength / 2) < maxZ)) || ((bulletPos.z + (bulletLength / 2) > minZ) && (bulletPos.z + (bulletLength / 2) < maxZ)))) {
-				renderVoxels[i] = false;
-			}
-			else if ((((playerPos.x - (playerLength / 2) > minX) && (playerPos.x - (playerLength / 2) < maxX)) || ((playerPos.x + (playerLength / 2) > minX) && (playerPos.x + (playerLength / 2) < maxX))) && (((playerPos.z - (playerLength / 2) > minZ) && (playerPos.z - (playerLength / 2) < maxZ)) || ((playerPos.z + (playerLength / 2) > minZ) && (playerPos.z + (playerLength / 2) < maxZ)))) {
-				// colliding
-				renderVoxels[i] = false;
-			}
-			else {
-				// do nothing
+		for (int i = 0; i < BARRIER_H; i++) {
+			for (int j = 0; j < BARRIER_W; j++) {
+				vector3 voxelPos = GetVoxelPosition(i, j);
+					if (barrierVals[i][j] == 0) {
+						continue;
+					}
+					if ((((playerPos.x - (playerLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (playerPos.x - (playerLength / 2) < voxelPos.x + (SIZE_VOXELS / 2))) || ((playerPos.x + (playerLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (playerPos.x + (playerLength / 2) < voxelPos.x + (SIZE_VOXELS / 2)))) && (((playerPos.z - (playerLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (playerPos.z - (playerLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))) || ((playerPos.z + (playerLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (playerPos.z + (playerLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))))) {
+						barrierVals[i][j] = 0;
+						player->SetPlayerScore(10);
+					}
+					else if((((bulletPos.x - (bulletLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (bulletPos.x - (bulletLength / 2) < voxelPos.x + (SIZE_VOXELS / 2))) || ((bulletPos.x + (bulletLength / 2) > voxelPos.x - (SIZE_VOXELS / 2)) && (bulletPos.x + (bulletLength / 2) < voxelPos.x + (SIZE_VOXELS / 2)))) && (((bulletPos.z - (bulletLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (bulletPos.z - (bulletLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))) || ((bulletPos.z + (bulletLength / 2) > voxelPos.z - (SIZE_VOXELS / 2)) && (bulletPos.z + (bulletLength / 2) < voxelPos.z + (SIZE_VOXELS / 2))))){
+						barrierVals[i][j] = 0;
+						playerBullet->SetFired(false);
+						playerBullet->SetActiveBullet(false);
+						playerBullet->ResetPosition();
+						//player->killBullet->SetFired(false);
+						//player->killBullet->SetActiveBullet(false);
+					}
+					else {
+						// do nothing
+					}
 			}
 		}
-		// barrier
+		
 	}
 
 	// check if current bullet pos or player pos are "hitting" a voxel in barrier
@@ -170,19 +160,36 @@ void Enemy::DetectEnemyCollisions(Player* player)
 {
 	vector3 playerPos = player->GetPlayerPosition();
 	float playerLength = player->getPlayerLength();
-	
-
+	/*
 	if ((((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
-		// colliding
+		player->killBullet = new Bullet(playerPos, 1, 1);
+		player->killBullet->SetActiveBullet(true);
+		player->SetLives();
 	}
 	else {
 		// do nothing
 	}
-	// detect if player position x and z are overlapping enemy // aabb
+	*/
+	
+	if (launched == false && (((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
+		// colliding
+		player->killBullet = new Bullet(playerPos, 1, 1);
+		player->killBullet->SetActiveBullet(true);
+		
+	}
+	else if (launched == true && (((playerPos.x - (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x - (playerLength / 2) < enemyPos.x + (enemyLength / 2))) || ((playerPos.x + (playerLength / 2) > enemyPos.x - (enemyLength / 2)) && (playerPos.x + (playerLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((playerPos.z - (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z - (playerLength / 2) < enemyPos.z + (enemyLength / 2))) || ((playerPos.z + (playerLength / 2) > enemyPos.z - (enemyLength / 2)) && (playerPos.z + (playerLength / 2) < enemyPos.z + (enemyLength / 2))))) {
+		
+		player->SetLives();
+	}
+	else {
+		// do nothing
+	}
+	
+
 	
 }
 
-void Enemy::DetectEnemyKillShot(Bullet* bullet)
+void Enemy::DetectEnemyKillShot(Bullet* bullet, Player* player)
 {
 	int type = bullet->GetBulletType();
 	vector3 bulletPos = bullet->GetBulletPos();
@@ -194,6 +201,7 @@ void Enemy::DetectEnemyKillShot(Bullet* bullet)
 	{
 		if ((((bulletPos.x - (bulletLength / 2) > enemyPos.x - (enemyLength / 2)) && (bulletPos.x - (bulletLength / 2) < enemyPos.x + (enemyLength / 2))) || ((bulletPos.x + (bulletLength / 2) > enemyPos.x - (enemyLength / 2)) && (bulletPos.x + (bulletLength / 2) < enemyPos.x + (enemyLength / 2)))) && (((bulletPos.z - (bulletLength / 2) > enemyPos.z - (enemyLength / 2)) && (bulletPos.z - (bulletLength / 2) < enemyPos.z + (enemyLength / 2))) || ((bulletPos.z + (bulletLength / 2) > enemyPos.z - (enemyLength / 2)) && (bulletPos.z + (bulletLength / 2) < enemyPos.z + (enemyLength / 2))))) {
 			// colliding
+			player->SetPlayerScore(1000);
 			enemyLives = 0;
 		}
 		else {

@@ -119,6 +119,7 @@ void AppClass::Update(void)
 		//m_pMeshMngr->Print(std::to_string(nFPS), RERED);
 
 		// Player position, using this to set up player bounderies
+		/*
 		m_pMeshMngr->Print("PlayerPosition: (");
 		m_pMeshMngr->Print(std::to_string(playerPos.x), RERED);
 		m_pMeshMngr->Print(", ");
@@ -126,18 +127,16 @@ void AppClass::Update(void)
 		m_pMeshMngr->Print(", ");
 		m_pMeshMngr->Print(std::to_string(playerPos.z), RERED);
 		m_pMeshMngr->PrintLine(")");
+		
 		m_pMeshMngr->Print("Current Frame: ", REYELLOW);
 		m_pMeshMngr->PrintLine(std::to_string(frameCount), RERED);
-
-		m_pMeshMngr->Print("Lives: ");
-		m_pMeshMngr->PrintLine(std::to_string(player->getPlayerLives()), RERED);
-
+		*/
 		// update the enemy position
 		enemy->Move();
 
 		// UI elements
-		m_pMeshMngr->PrintLine("Score: ", REYELLOW);
-		m_pMeshMngr->PrintLine("Lives: ", REYELLOW);
+		m_pMeshMngr->Print("Lives: ", REYELLOW);
+		m_pMeshMngr->PrintLine(std::to_string(player->getPlayerLives()), RERED);
 
 		//Update bullet positions
 		if (player->mainBullet->GetFired() == true)
@@ -155,9 +154,10 @@ void AppClass::Update(void)
 			player->DetectCollisions(player->killBullet);
 			player->DetectCollisions(enemy->enemyBullet);
 			player->DetectCollisions(trackingBullet);
-			enemy->DetectEnemyKillShot(player->killBullet);
-			//enemy->DetectBarrierCollisions(player->killBullet, player);
+			enemy->DetectEnemyKillShot(player->killBullet, player);
+			enemy->DetectBarrierCollisions(player->killBullet, player);
 			enemy->DetectBarrierCollisions(player->mainBullet, player);
+			enemy->DetectEnemyCollisions(player);
 			if (player->getPlayerLives() <= 0) {
 				dead = true;
 			}

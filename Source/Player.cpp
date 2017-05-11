@@ -21,6 +21,7 @@ Player::Player()
 
 	playerLength = 0.8f;
 	playerLives = 1;
+	playerScore = 0;
 }
 
 
@@ -98,66 +99,22 @@ void Player::DetectCollisions(Bullet* bullet)
 	//std::cout << " bully: " << bulletPos.y;
 	//std::cout << " bullz: " << bulletPos.z;
 	//std::cout << (((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))));
-	
+	if (type == 2 && inField == true) {
+		return;
+	}
 	if (type != 0) {
-		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
 
+		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
 			// colliding
-			std::cout << "bullet collision";
 			playerLives--;
-			
-			
+
 		}
 		else {
 			// not colliding
 		}
 	}
 
-	/*
-	switch (type)
-	{
-	case '0':
-		// player bullet, do nothing
-		break;
-	case '1':
-		std::cout << "kill bullet detection";
-		// collisions with kill bullet (yes player can kill themself with kill bullet)
-		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
-		
-			// colliding
-			std::cout << "kill bullet collision";
-		}
-		else {
-			// not colliding
-		}
-		
-			//				
-			
-		break;
-	case '2': 
-		// collisions with tracking bullet
-		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
-
-			// colliding
-			std::cout << "tracking bullet collision";
-		}
-		else {
-			// not colliding
-		}
-		break;
-	case '3':
-		// collisions with enemy bullet (enemy itself when its launched)
-		if ((((playerPos.x - (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x - (playerLength / 2) < bulletPos.x + (bulletLength / 2))) || ((playerPos.x + (playerLength / 2) > bulletPos.x - (bulletLength / 2)) && (playerPos.x + (playerLength / 2) < bulletPos.x + (bulletLength / 2)))) && (((playerPos.z - (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z - (playerLength / 2) < bulletPos.z + (bulletLength / 2))) || ((playerPos.z + (playerLength / 2) > bulletPos.z - (bulletLength / 2)) && (playerPos.z + (playerLength / 2) < bulletPos.z + (bulletLength / 2))))) {
-
-			// colliding
-			std::cout << "enemy bullet collision";
-		}
-		else {
-			// not colliding
-		}
-		break;
-	}
-	*/
+	
 }
 
 vector3 Player::GetPlayerPosition() { // return player's position
@@ -252,4 +209,16 @@ int Player::getPlayerLives() {
 
 float Player::getPlayerLength() {
 	return playerLength;
+}
+
+void Player::SetLives() {
+	playerLives--;
+}
+
+int Player::GetPlayerScore() {
+	return playerScore;
+}
+
+void Player::SetPlayerScore(int addScore) {
+	playerScore += addScore;
 }

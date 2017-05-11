@@ -33,7 +33,7 @@ Bullet::Bullet(vector3 userPos, int userDir, int type)
 	case 2: // Tracking
 		// Assign bullet details
 		bulletM4 = glm::translate(bulletPos);
-		bulletLength = 0.3f;
+		bulletLength = 0.4f;
 		break;
 	case 3: // Enemy
 		// Assign bullet details
@@ -375,6 +375,10 @@ void Bullet::SetFired(bool isFired)
 
 float Bullet::GetBulletLength() {
 	return bulletLength;
+}
+
+void Bullet::ResetPosition() {
+	bulletPos = vector3(0.0f, 0.0f, 0.0f);
 }
 
 //Destructor

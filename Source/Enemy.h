@@ -47,7 +47,7 @@ private:
 		{ 0, 0, 0, 0, 1, 1, 1, 1 }
 	};
 	bool barrierVals[BARRIER_H][BARRIER_W];
-	bool* renderVoxels = new bool[NUM_VOXELS];
+	//bool* renderVoxels = new bool[NUM_VOXELS];
 public:
 	static Enemy* GetInstance() {
 		if (instance == nullptr) {
@@ -75,7 +75,7 @@ public:
 	void RenderModel(matrix4 projection, matrix4 view);
 	void DetectBarrierCollisions(Bullet* playerBullet, Player* player);
 	void DetectEnemyCollisions(Player* player);
-	void DetectEnemyKillShot(Bullet* bullet);
+	void DetectEnemyKillShot(Bullet* bullet, Player* player);
 	vector3 GetVoxelPosition(int r, int c);
 
 	Enemy();
